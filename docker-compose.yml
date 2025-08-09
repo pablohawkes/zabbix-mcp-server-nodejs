@@ -28,7 +28,7 @@ services:
       start_period: 40s
     labels:
       - "com.example.description=Zabbix MCP Server"
-      - "com.example.version=2.0.0"
+      - "com.example.version=3.0.0"
       - "com.example.tools=90+"
       - "com.example.categories=19"
 
