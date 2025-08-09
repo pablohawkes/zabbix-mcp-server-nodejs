@@ -1,5 +1,5 @@
 /**
- * UpGuard CyberRisk MCP Server - Logger Utility
+ * Zabbix MCP Server - Logger Utility
  * 
  * Copyright (c) 2024 Han Yong Lim
  * 
@@ -22,8 +22,21 @@
  * SOFTWARE.
  */
 
+// Log levels in order of severity
+const LOG_LEVELS = {
+    error: 0,
+    warn: 1,
+    info: 2,
+    debug: 3,
+    http: 4
+};
+
 class Logger {
     constructor() {
+        // Get log level from environment, default to 'info'
+        this.logLevel = process.env.LOG_LEVEL || 'info';
+        this.currentLogLevel = LOG_LEVELS[this.logLevel.toLowerCase()] ?? LOG_LEVELS.info;
+        
         // Bind all methods to ensure they work correctly when passed as references
         this.error = this.error.bind(this);
         this.warn = this.warn.bind(this);
@@ -32,24 +45,62 @@ class Logger {
         this.http = this.http.bind(this);
     }
 
+    _shouldLog(level) {
+        return LOG_LEVELS[level] <= this.currentLogLevel;
+    }
+
+    _formatMessage(level, ...args) {
+        const timestamp = new Date().toISOString();
+        const message = args.map(arg => 
+            typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+        ).join(' ');
+        return `${timestamp} [${level.toUpperCase()}] ${message}`;
+    }
+
     error(...args) {
-        process.stderr.write(`[ERROR] ${args.join(' ')}\n`);
+        if (this._shouldLog('error')) {
+            process.stderr.write(this._formatMessage('error', ...args) + '\n');
+        }
     }
 
     warn(...args) {
-        process.stderr.write(`[WARN] ${args.join(' ')}\n`);
+        if (this._shouldLog('warn')) {
+            process.stderr.write(this._formatMessage('warn', ...args) + '\n');
+        }
     }
 
     info(...args) {
-        process.stderr.write(`[INFO] ${args.join(' ')}\n`);
+        if (this._shouldLog('info')) {
+            process.stderr.write(this._formatMessage('info', ...args) + '\n');
+        }
     }
 
     debug(...args) {
-        process.stderr.write(`[DEBUG] ${args.join(' ')}\n`);
+        if (this._shouldLog('debug')) {
+            process.stderr.write(this._formatMessage('debug', ...args) + '\n');
+        }
     }
 
     http(...args) {
-        process.stderr.write(`[HTTP] ${args.join(' ')}\n`);
+        if (this._shouldLog('http')) {
+            process.stderr.write(this._formatMessage('http', ...args) + '\n');
+        }
+    }
+
+    // Allow changing log level at runtime
+    setLogLevel(level) {
+        if (level in LOG_LEVELS) {
+            this.logLevel = level;
+            this.currentLogLevel = LOG_LEVELS[level];
+            this.info(`Log level changed to: ${level}`);
+        } else {
+            this.warn(`Invalid log level: ${level}. Valid levels: ${Object.keys(LOG_LEVELS).join(', ')}`);
+        }
+    }
+
+    // Get current log level
+    getLogLevel() {
+        return this.logLevel;
     }
 }
 
@@ -95,5 +146,6 @@ module.exports = {
     errorLogger,
     logApiCall,
     logToolExecution,
-    logPerformance
-}; 
+    logPerformance,
+    LOG_LEVELS
+};
