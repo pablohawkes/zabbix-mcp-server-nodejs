@@ -10,18 +10,27 @@ function registerTools(server) {
         'Get media types from Zabbix with filtering and output options',
         {
             mediatypeids: z.array(z.string()).optional().describe('Return only media types with the given IDs'),
-            output: schemas.outputFields.optional().default('extend').describe('Object properties to be returned'),
-            selectMessageTemplates: schemas.outputFields.optional().describe('Return message templates used by the media type'),
-            selectUsers: schemas.outputFields.optional().describe('Return users that use the media type'),
+            output: z.union([z.literal('extend'), z.literal('count'), z.array(z.string())]).optional().default('extend').describe('Object properties to be returned'),
+            selectMessageTemplates: z.union([z.literal('extend'), z.literal('count'), z.array(z.string())]).optional().describe('Return message templates used by the media type'),
+            selectUsers: z.union([z.literal('extend'), z.literal('count'), z.array(z.string())]).optional().describe('Return users that use the media type'),
             filter: z.record(z.any()).optional().describe('Return only media types that match the given filter'),
             search: z.record(z.any()).optional().describe('Return only media types that match the given wildcard search'),
+            searchByAny: z.boolean().optional().describe('If true, return results that match any search criteria instead of all'),
+            startSearch: z.boolean().optional().describe('Search parameter will compare the beginning of fields'),
+            excludeSearch: z.boolean().optional().describe('Return results that do not match the search criteria'),
+            searchWildcardsEnabled: z.boolean().optional().describe('Enable use of "*" as wildcard character in search'),
             sortfield: z.union([z.string(), z.array(z.string())]).optional().describe('Field(s) to sort by (e.g., "name", ["type", "name"])'),
-            sortorder: schemas.sortOrder.optional().describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            sortorder: z.union([z.enum(['ASC', 'DESC']), z.array(z.enum(['ASC', 'DESC']))]).optional().describe('Sort order (can be array matching sortfield)'),
+            limit: z.number().int().positive().optional().describe('Limit the number of records returned'),
+            preservekeys: z.boolean().optional().describe('Use IDs as keys in the resulting array'),
+            countOutput: z.boolean().optional().describe('Return count of records instead of actual data')
         },
         async (args) => {
+            logger.info('[MEDIA TOOL DEBUG] zabbix_get_media_types called with args:', JSON.stringify(args, null, 2));
+            
             try {
                 const params = { ...args };
+                logger.debug('[MEDIA TOOL DEBUG] Processing params:', JSON.stringify(params, null, 2));
                 
                 const apiParams = {
                     output: params.output || 'extend',
@@ -34,10 +43,20 @@ function registerTools(server) {
                 if (params.selectUsers) apiParams.selectUsers = params.selectUsers;
                 if (params.filter) apiParams.filter = params.filter;
                 if (params.search) apiParams.search = params.search;
+                if (params.searchByAny !== undefined) apiParams.searchByAny = params.searchByAny;
+                if (params.startSearch !== undefined) apiParams.startSearch = params.startSearch;
+                if (params.excludeSearch !== undefined) apiParams.excludeSearch = params.excludeSearch;
+                if (params.searchWildcardsEnabled !== undefined) apiParams.searchWildcardsEnabled = params.searchWildcardsEnabled;
                 if (params.limit) apiParams.limit = params.limit;
+                if (params.preservekeys !== undefined) apiParams.preservekeys = params.preservekeys;
+                if (params.countOutput !== undefined) apiParams.countOutput = params.countOutput;
+
+                logger.info('[MEDIA TOOL DEBUG] Final API params:', JSON.stringify(apiParams, null, 2));
+                logger.info('[MEDIA TOOL DEBUG] About to call api.getMediaTypes...');
 
                 const mediaTypes = await api.getMediaTypes(apiParams);
                 
+                logger.info('[MEDIA TOOL DEBUG] API call successful, received media types:', mediaTypes?.length || 'unknown count');
                 logger.info(`Retrieved ${mediaTypes.length} media types`);
                 return {
                     content: [{
@@ -46,6 +65,8 @@ function registerTools(server) {
                     }]
                 };
             } catch (error) {
+                logger.error('[MEDIA TOOL DEBUG] Error in zabbix_get_media_types:', error.message);
+                logger.error('[MEDIA TOOL DEBUG] Error stack:', error.stack);
                 logger.error('Error getting media types:', error.message);
                 throw error;
             }

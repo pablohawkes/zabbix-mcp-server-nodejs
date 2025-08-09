@@ -870,20 +870,26 @@ Get services discovered by network discovery.
 ## 📢 Media & Notifications Tools (7 tools)
 
 ### `zabbix_get_media_types`
-Get media types with filtering.
+Get media types with comprehensive filtering and search options.
 
 **Parameters:**
 - `mediatypeids` (array, optional): Specific media type IDs
-- `output` (string/array, optional): Output fields
+- `output` (string/array, optional): Output fields ("extend", "count", or array of field names)
 - `selectUsers` (string/array, optional): Include user information
 - `selectMessageTemplates` (string/array, optional): Include message templates
-- `filter` (object, optional): Filter conditions
-- `search` (object, optional): Search conditions
-- `sortfield` (array, optional): Sort fields
-- `sortorder` (array, optional): Sort order
+- `filter` (object, optional): Filter conditions (exact match)
+- `search` (object, optional): Search conditions (wildcard support)
+- `searchByAny` (boolean, optional): Match any search criteria instead of all
+- `startSearch` (boolean, optional): Search from beginning of fields
+- `excludeSearch` (boolean, optional): Exclude results matching search criteria
+- `searchWildcardsEnabled` (boolean, optional): Enable "*" wildcard in search
+- `sortfield` (string/array, optional): Sort fields (e.g., "name" or ["name", "type"])
+- `sortorder` (string/array, optional): Sort order ("ASC"/"DESC", can be array matching sortfield)
 - `limit` (integer, optional): Result limit
+- `preservekeys` (boolean, optional): Use IDs as keys in result array
+- `countOutput` (boolean, optional): Return count instead of actual data
 
-**Returns:** Array of media type objects
+**Returns:** Array of media type objects or count (if countOutput=true)
 
 ### `zabbix_create_media_type`
 Create media type for notifications.

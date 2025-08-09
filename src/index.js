@@ -38,7 +38,7 @@ const config = require('./config');
 async function createServer() {
     const serverInstance = new McpServer({
         name: 'zabbix_mcp_server',
-        version: '1.7.0',
+        version: '2.0.0',
         description: 'MCP server for interacting with the Zabbix API, providing comprehensive monitoring and management capabilities.'
     });
 

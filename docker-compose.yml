@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - ZABBIX_URL=${ZABBIX_URL}
+      - ZABBIX_API_URL=${ZABBIX_API_URL}
       - ZABBIX_USERNAME=${ZABBIX_USERNAME}
       - ZABBIX_PASSWORD=${ZABBIX_PASSWORD}
       - MCP_TRANSPORT_MODE=${MCP_TRANSPORT_MODE:-stdio}
@@ -39,7 +39,7 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=development
-      - ZABBIX_URL=${ZABBIX_URL}
+      - ZABBIX_API_URL=${ZABBIX_API_URL}
       - ZABBIX_USERNAME=${ZABBIX_USERNAME}
       - ZABBIX_PASSWORD=${ZABBIX_PASSWORD}
       - MCP_TRANSPORT_MODE=${MCP_TRANSPORT_MODE:-http}
@@ -65,7 +65,7 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - ZABBIX_URL=${ZABBIX_URL}
+      - ZABBIX_API_URL=${ZABBIX_API_URL}
       - ZABBIX_USERNAME=${ZABBIX_USERNAME}
       - ZABBIX_PASSWORD=${ZABBIX_PASSWORD}
       - MCP_TRANSPORT_MODE=http

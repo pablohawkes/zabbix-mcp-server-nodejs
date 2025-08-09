@@ -33,6 +33,13 @@ function determineAuthMethod() {
     const hasApiToken = !!process.env.ZABBIX_API_TOKEN;
     const hasPassword = !!process.env.ZABBIX_PASSWORD;
     
+    console.log('[CONFIG DEBUG] Environment variables check:');
+    console.log('[CONFIG DEBUG] ZABBIX_API_TOKEN:', process.env.ZABBIX_API_TOKEN ? 'SET' : 'UNDEFINED');
+    console.log('[CONFIG DEBUG] ZABBIX_PASSWORD:', process.env.ZABBIX_PASSWORD ? 'SET' : 'UNDEFINED');
+    console.log('[CONFIG DEBUG] ZABBIX_USERNAME:', process.env.ZABBIX_USERNAME ? 'SET' : 'UNDEFINED');
+    console.log('[CONFIG DEBUG] ZABBIX_API_URL:', process.env.ZABBIX_API_URL || 'UNDEFINED');
+    console.log('[CONFIG DEBUG] hasApiToken:', hasApiToken, 'hasPassword:', hasPassword);
+    
     if (hasApiToken && hasPassword) {
         logger.warn('Both ZABBIX_API_TOKEN and ZABBIX_PASSWORD are set. Using API token (more secure).');
         return 'token';
@@ -63,7 +70,7 @@ const config = {
         
         // Connection settings
         timeout: parseInt(process.env.ZABBIX_REQUEST_TIMEOUT, 10) || 120000,
-        ignoreSelfSignedCert: process.env.ZABBIX_IGNORE_SELFSIGNED_CERT === 'true' || true
+        ignoreSelfSignedCert: process.env.ZABBIX_IGNORE_SELFSIGNED_CERT === 'true'
     },
     transport: {
         mode: process.env.MCP_TRANSPORT_MODE || 'stdio', // 'stdio' or 'http'
@@ -74,7 +81,7 @@ const config = {
         }
     },
     cache: {
-        enabled: process.env.CACHE_ENABLED === 'true' || true,
+        enabled: process.env.CACHE_ENABLED === 'true',
         ttl: parseInt(process.env.CACHE_TTL, 10) || 300,
         maxSize: parseInt(process.env.CACHE_MAX_SIZE, 10) || 1000
     },

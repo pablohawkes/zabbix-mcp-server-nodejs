@@ -1,7 +1,6 @@
 const { request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
-const legacyClient = require('../../zabbixApiClient');
 
 /**
  * Get media types from Zabbix
@@ -9,14 +8,27 @@ const legacyClient = require('../../zabbixApiClient');
  * @returns {Promise<Array>} Array of media types
  */
 async function getMediaTypes(options = {}) {
+    logger.info('[MEDIA API DEBUG] getMediaTypes called with options:', JSON.stringify(options, null, 2));
+    
     // Set default output if not provided, just like legacy client
     const params = {
         output: 'extend',
         ...options
     };
     
-    // Pass parameters directly to Zabbix API, exactly like legacy client
-    return await request('mediatype.get', params);
+    logger.info('[MEDIA API DEBUG] Final params for mediatype.get:', JSON.stringify(params, null, 2));
+    logger.info('[MEDIA API DEBUG] About to call request("mediatype.get", params)...');
+    
+    try {
+        // Pass parameters directly to Zabbix API, exactly like legacy client
+        const result = await request('mediatype.get', params);
+        logger.info('[MEDIA API DEBUG] request() returned successfully, result type:', typeof result, 'length:', result?.length || 'N/A');
+        return result;
+    } catch (error) {
+        logger.error('[MEDIA API DEBUG] request() failed with error:', error.message);
+        logger.error('[MEDIA API DEBUG] Error stack:', error.stack);
+        throw error;
+    }
 }
 
 /**
