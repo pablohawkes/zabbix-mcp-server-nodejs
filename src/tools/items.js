@@ -19,7 +19,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only items that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned'),
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned'),
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned'),
             monitored: z.boolean().optional().describe('Return only enabled items that belong to monitored hosts')
         },
         async (args) => {
@@ -59,7 +60,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create item
     server.tool(
         'zabbix_create_item',
@@ -163,7 +164,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     // Get latest data for items
     server.tool(
         'zabbix_get_latest_data',
@@ -173,7 +174,8 @@ function registerTools(server) {
             hostids: z.array(z.string()).optional().describe('Return only items that belong to the given hosts'),
             output: z.array(z.string()).optional().default(['itemid', 'name', 'lastvalue', 'lastclock', 'units']).describe('Object properties to be returned'),
             selectHosts: z.array(z.string()).optional().describe('Return hosts that the item belongs to'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {

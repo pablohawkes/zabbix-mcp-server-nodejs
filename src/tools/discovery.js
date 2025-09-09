@@ -22,7 +22,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only discovery rules that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -62,7 +63,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create discovery rule
     server.tool(
         'zabbix_create_discovery_rule',
@@ -287,7 +288,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     logger.info('Discovery tools registered successfully');
 }
 

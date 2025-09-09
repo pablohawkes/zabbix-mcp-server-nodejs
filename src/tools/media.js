@@ -1,7 +1,7 @@
 const { logger } = require('../utils/logger');
 const api = require('../api');
 const { z } = require('zod');
-const schemas = require('./schemas');
+//const schemas = require('./schemas');
 
 function registerTools(server) {
     // Get media types
@@ -21,7 +21,8 @@ function registerTools(server) {
             searchWildcardsEnabled: z.boolean().optional().describe('Enable use of "*" as wildcard character in search'),
             sortfield: z.union([z.string(), z.array(z.string())]).optional().describe('Field(s) to sort by (e.g., "name", ["type", "name"])'),
             sortorder: z.union([z.enum(['ASC', 'DESC']), z.array(z.enum(['ASC', 'DESC']))]).optional().describe('Sort order (can be array matching sortfield)'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned'),
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned'),
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned'),
             preservekeys: z.boolean().optional().describe('Use IDs as keys in the resulting array'),
             countOutput: z.boolean().optional().describe('Return count of records instead of actual data')
         },
@@ -72,7 +73,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create media type
     server.tool(
         'zabbix_create_media_type',
@@ -210,7 +211,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     // Test media type
     server.tool(
         'zabbix_test_media_type',
@@ -259,7 +260,8 @@ function registerTools(server) {
             filter: z.record(z.any()).optional().describe('Return only user media that match the given filter'),
             sortfield: z.array(z.string()).optional().default(['userid']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -316,7 +318,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only alerts that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['clock']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('DESC').describe('Sort order'),
-            limit: z.number().int().positive().optional().default(100).describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().default(100).describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {

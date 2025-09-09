@@ -30,7 +30,8 @@ function registerTools(server) {
             selectSuppressionData: schemas.outputFields.optional().describe("Include suppression data."),
             sortfield: z.array(z.string()).optional().describe("Fields to sort by."),
             sortorder: schemas.sortOrder.optional().describe("Sort order."),
-            limit: z.number().int().positive().optional().describe("Maximum number of problems to return.")
+            //limit: z.number().int().positive().optional().describe("Maximum number of problems to return.")
+            limit: z.number().int().min(1).optional().describe("Maximum number of problems to return.")
         },
         async (args) => {
             try {
@@ -72,7 +73,8 @@ function registerTools(server) {
             selectSuppressionData: schemas.outputFields.optional().describe("Include suppression data."),
             sortfield: z.array(z.string()).optional().default(["clock", "eventid"]).describe("Fields to sort by."),
             sortorder: schemas.sortOrder.optional().default("DESC").describe("Sort order."),
-            limit: z.number().int().positive().optional().default(100).describe("Maximum number of events to return.")
+            //limit: z.number().int().positive().optional().default(100).describe("Maximum number of events to return.")
+            limit: z.number().int().min(1).optional().default(100).describe("Maximum number of events to return.")
         },
         async (args) => {
             try {
@@ -84,7 +86,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Tool: Acknowledge Event
     server.tool(
         'zabbix_acknowledge_event',
@@ -113,6 +115,7 @@ function registerTools(server) {
             }
         }
     );
+*/
 }
 
 module.exports = { registerTools }; 

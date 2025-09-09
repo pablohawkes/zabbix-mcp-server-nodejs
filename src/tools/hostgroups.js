@@ -15,7 +15,8 @@ function registerTools(server) {
             selectTemplates: z.array(z.string()).optional().describe('Return templates that belong to the host group'),
             sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -50,6 +51,7 @@ function registerTools(server) {
         }
     );
 
+    /*
     // Create host group
     server.tool(
         'zabbix_create_hostgroup',
@@ -131,6 +133,7 @@ function registerTools(server) {
             }
         }
     );
+    */
 
     logger.info('Host groups tools registered successfully');
 }

@@ -14,7 +14,8 @@ function registerTools(server) {
             time_till: z.number().int().optional().describe('Return only values that have been received before or at the given time (Unix timestamp)'),
             sortfield: z.array(z.string()).optional().default(['clock']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('DESC').describe('Sort order'),
-            limit: z.number().int().positive().optional().default(100).describe('Limit the number of records returned (default: 100, max recommended: 1000)'),
+            //limit: z.number().int().positive().optional().default(100).describe('Limit the number of records returned (default: 100, max recommended: 1000)'),
+            limit: z.number().int().min(1).optional().default(100).describe('Limit the number of records returned (default: 100, max recommended: 1000)'),
             output: z.enum(['extend', 'count']).optional().default('extend').describe('Type of output (extend - all fields, count - number of records)')
         },
         async (args) => {
@@ -68,7 +69,8 @@ function registerTools(server) {
             time_till: z.number().int().optional().describe('Return only values that have been received before or at the given time (Unix timestamp)'),
             sortfield: z.array(z.string()).optional().default(['clock']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('DESC').describe('Sort order'),
-            limit: z.number().int().positive().optional().default(100).describe('Limit the number of records returned (default: 100)'),
+            //limit: z.number().int().positive().optional().default(100).describe('Limit the number of records returned (default: 100)'),
+            limit: z.number().int().min(1).optional().default(100).describe('Limit the number of records returned (default: 100)'),
             output: z.enum(['extend', 'count']).optional().default('extend').describe('Type of output (extend - all fields, count - number of records)')
         },
         async (args) => {
@@ -119,8 +121,10 @@ function registerTools(server) {
         'Get historical data for a specific item over a time range with automatic value type detection',
         {
             itemid: z.string().describe('Item ID to get history for'),
-            hours_back: z.number().int().positive().optional().default(24).describe('Number of hours back from now to retrieve data (default: 24)'),
-            limit: z.number().int().positive().optional().default(100).describe('Maximum number of records to return (default: 100)'),
+            //hours_back: z.number().int().positive().optional().default(24).describe('Number of hours back from now to retrieve data (default: 24)'),
+            hours_back: z.number().int().min(1).optional().default(24).describe('Number of hours back from now to retrieve data (default: 24)'),
+            //limit: z.number().int().positive().optional().default(100).describe('Maximum number of records to return (default: 100)'),
+            limit: z.number().int().min(1).optional().default(100).describe('Maximum number of records to return (default: 100)'),
             include_item_info: z.boolean().optional().default(true).describe('Include item information in the response')
         },
         async (args) => {

@@ -15,7 +15,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only value maps that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -48,7 +49,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create value map
     server.tool(
         'zabbix_create_value_map',
@@ -143,7 +144,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     // Get icon maps
     server.tool(
         'zabbix_get_icon_maps',
@@ -156,7 +157,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only icon maps that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -189,7 +191,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create icon map
     server.tool(
         'zabbix_create_icon_map',
@@ -284,7 +286,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     // Get network maps
     server.tool(
         'zabbix_get_maps',
@@ -305,7 +307,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only maps that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -346,7 +349,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create network map
     server.tool(
         'zabbix_create_map',
@@ -567,7 +570,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     logger.info('Maps tools registered successfully');
 }
 

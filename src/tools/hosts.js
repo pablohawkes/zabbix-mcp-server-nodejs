@@ -89,7 +89,11 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe("Wildcard search criteria (e.g., { host: 'web*' }). Will search in 'host' (technical name) and 'name' (visible name) fields primarily."),
             output: schemas.outputFields.optional().default("extend")
                 .describe("Properties to return. Defaults to 'extend'. Common options: ['hostid', 'host', 'name', 'status', 'error', 'available']."),
+            /*
             selectGroups: schemas.outputFields.optional().default("extend")
+                .describe("Include host group information. Use 'extend' for all group fields or specify an array like ['groupid', 'name']."),
+            */
+            selectGroups: schemas.outputFields = z.union([z.string(),z.array(z.string())])
                 .describe("Include host group information. Use 'extend' for all group fields or specify an array like ['groupid', 'name']."),
             selectInterfaces: schemas.outputFields.optional().default("extend")
                 .describe("Include host interface information. Use 'extend' for all interface fields or specify an array like ['interfaceid', 'ip', 'port', 'type']."),
@@ -100,16 +104,17 @@ function registerTools(server) {
                 .describe("Include host inventory data. Use 'extend' for all inventory fields or specify an array of inventory property names (e.g. ['os', 'type'])."),
             selectItems: schemas.outputFields.optional().describe("Include items from the host."),
             selectTriggers: schemas.outputFields.optional().describe("Include triggers from the host."),
-            limit: z.number().int().positive().optional().describe("Maximum number of hosts to return."),
+            //limit: z.number().int().positive().optional().describe("Maximum number of hosts to return."),
+            limit: z.number().int().min(1).optional().describe("Maximum number of hosts to return."),
             sortfield: z.union([z.string(), z.array(z.string())]).optional().describe("Field(s) to sort by (e.g., 'name', ['status', 'host'])."),
             sortorder: schemas.sortOrder.optional().describe("Sort order ('ASC' or 'DESC').")
         },
         async (args) => {
             try {
-                let clientParams = { ...args };
+                const clientParams = { ...args };
                 delete clientParams.hostIdentifiers;
 
-                let resolutionMessages = [];
+                const resolutionMessages = [];
 
                 if (args.hostIdentifiers && args.hostIdentifiers.length > 0) {
                     const { resolvedHostIds, errors } = await resolveHostIdentifiers(args.hostIdentifiers);
@@ -142,7 +147,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Tool: Create Host
     server.tool(
         'zabbix_host_create',
@@ -251,7 +256,10 @@ function registerTools(server) {
                 throw error;
             }
         }
+            
     );
+    */
+       logger.info('Host tools registered successfully');
 }
 
-module.exports = { registerTools }; 
+module.exports = { registerTools };

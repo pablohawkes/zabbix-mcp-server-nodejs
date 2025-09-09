@@ -8,7 +8,7 @@
 const api = require('../api');
 const { logger } = require('../utils/logger');
 const { z } = require('zod');
-const schemas = require('./schemas');
+//const schemas = require('./schemas');
 
 function registerTools(server) {
     // Tool: Get Infrastructure Health

@@ -17,7 +17,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only dashboards that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -52,7 +53,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create dashboard
     server.tool(
         'zabbix_create_dashboard',
@@ -199,7 +200,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     logger.info('Dashboards tools registered successfully');
 }
 

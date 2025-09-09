@@ -30,7 +30,7 @@ const { randomUUID } = require('crypto');
 const express = require('express');
 const { z } = require('zod');
 const { registerAllTools } = require('./tools');
-const schemas = require('./tools/schemas');
+//const schemas = require('./tools/schemas');
 const { logger } = require('./utils/logger');
 const config = require('./config');
 

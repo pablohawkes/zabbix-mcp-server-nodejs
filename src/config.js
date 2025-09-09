@@ -24,9 +24,12 @@
 
 const dotenv = require('dotenv');
 const { logger } = require('./utils/logger');
+const path = require('path');
 
+//dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 // Load environment variables
-dotenv.config();
+//dotenv.config();
 
 // Determine authentication method
 function determineAuthMethod() {

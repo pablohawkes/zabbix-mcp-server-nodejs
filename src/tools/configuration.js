@@ -53,7 +53,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Import configuration
     server.tool(
         'zabbix_import_configuration',
@@ -260,7 +260,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     logger.info('Configuration tools registered successfully');
 }
 

@@ -64,5 +64,3 @@ function registerAllTools(server) {
 }
 
 module.exports = { registerAllTools }; 
-
-

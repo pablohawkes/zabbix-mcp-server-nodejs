@@ -1,7 +1,7 @@
 const api = require('../api');
-const config = require('../config');
+//const config = require('../config');
 const { logger } = require('../utils/logger');
-const { z } = require('zod');
+//const { z } = require('zod');
 
 function registerTools(server) {
     // Tool: Get API Version
@@ -17,7 +17,7 @@ function registerTools(server) {
                     return { 
                         content: [{ 
                             type: 'text', 
-                            text: `Configuration Error: ${configStatus.error}\n\nRequired environment variables:\n${configStatus.requirements}` 
+                            text: 'Configuration Error: ${configStatus.error}\n\nRequired environment variables:\n${configStatus.requirements}' 
                         }] 
                     };
                 }
@@ -58,7 +58,7 @@ function registerTools(server) {
                 await api.getClient();
                 const isConnected = await api.checkConnection();
                 if (isConnected) {
-                    return { content: [{ type: 'text', text: `Successfully connected to Zabbix API (session established).` }] };
+                    return { content: [{ type: 'text', text: 'Successfully connected to Zabbix API (session established).' }] };
                 } else {
                     throw new Error('Failed to establish connection to Zabbix API');
                 }

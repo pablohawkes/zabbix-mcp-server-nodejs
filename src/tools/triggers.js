@@ -19,7 +19,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only triggers that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['priority']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('DESC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned'),
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned'),
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned'),
             monitored: z.boolean().optional().describe('Return only enabled triggers that belong to monitored hosts'),
             only_true: z.boolean().optional().describe('Return only triggers that are in problem state'),
             min_severity: z.number().int().min(0).max(5).optional().describe('Return only triggers with severity greater or equal'),
@@ -64,7 +65,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create trigger
     server.tool(
         'zabbix_create_trigger',
@@ -156,7 +157,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     logger.info('Triggers tools registered successfully');
 }
 

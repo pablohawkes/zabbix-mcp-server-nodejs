@@ -18,7 +18,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only templates that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -54,7 +55,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create template
     server.tool(
         'zabbix_create_template',
@@ -202,7 +203,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     logger.info('Templates tools registered successfully');
 }
 

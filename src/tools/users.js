@@ -18,7 +18,8 @@ function registerTools(server) {
             search: z.record(z.any()).optional().describe('Return only users that match the given wildcard search'),
             sortfield: z.array(z.string()).optional().default(['username']).describe('Sort the result by the given properties'),
             sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
-            limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
+            limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
         },
         async (args) => {
             try {
@@ -54,7 +55,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create user
     server.tool(
         'zabbix_create_user',
@@ -168,7 +169,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     // Get user groups
     server.tool(
         'zabbix_get_usergroups',
@@ -218,7 +219,7 @@ function registerTools(server) {
             }
         }
     );
-
+/*
     // Create user group
     server.tool(
         'zabbix_create_usergroup',
@@ -252,7 +253,7 @@ function registerTools(server) {
             }
         }
     );
-
+*/
     logger.info('Users tools registered successfully');
 }
 
