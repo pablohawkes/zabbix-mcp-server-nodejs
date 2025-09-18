@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 const os = require('os');
 
 class HealthMonitor {

@@ -5,6 +5,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
+// eslint-disable-next-line no-unused-vars
 const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -29,6 +30,7 @@ async function getUsers(options = {}) {
  * @param {Object} params - User creation parameters
  * @returns {Promise<Object>} Created user information
  */
+/*
 async function createUser(params) {
     // Validate required parameters
     if (!params.username || !params.passwd || !params.usrgrps) {
@@ -45,12 +47,14 @@ async function createUser(params) {
         throw new Error(`Failed to create user: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing user in Zabbix
  * @param {Object} params - User update parameters (must include userid)
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateUser(params) {
     if (!params || !params.userid) {
         throw new Error("Parameter 'userid' is required for updating a user.");
@@ -66,12 +70,14 @@ async function updateUser(params) {
         throw new Error(`Failed to update user: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete users from Zabbix
  * @param {Array<string>} userIds - Array of user IDs to delete
  * @returns {Promise<Object>} Deletion result
  */
+/*
 async function deleteUsers(userIds) {
     if (!Array.isArray(userIds) || userIds.length === 0 || !userIds.every(id => typeof id === 'string')) {
         throw new Error("deleteUsers expects a non-empty array of string user IDs.");
@@ -87,6 +93,7 @@ async function deleteUsers(userIds) {
         throw new Error(`Failed to delete users: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get users by username pattern
@@ -125,7 +132,7 @@ async function getUsersByUsername(usernamePatterns, additionalOptions = {}) {
  */
 async function getUsersByGroups(groupIds, additionalOptions = {}) {
     if (!Array.isArray(groupIds) || groupIds.length === 0) {
-        throw new Error("getUsersByGroups expects a non-empty array of group IDs.");
+        throw new Error('getUsersByGroups expects a non-empty array of group IDs.');
     }
 
     try {
@@ -156,7 +163,7 @@ async function getActiveUsers(daysBack = 30, additionalOptions = {}) {
     try {
         logger.debug(`${config.logging.prefix} Getting active users from last ${daysBack} days`);
         
-        const cutoffTime = Math.floor(Date.now() / 1000) - (daysBack * 24 * 60 * 60);
+        //const cutoffTime = Math.floor(Date.now() / 1000) - (daysBack * 24 * 60 * 60);
         
         const options = {
             output: ['userid', 'username', 'name', 'surname', 'type', 'autologin', 'autologout'],
@@ -270,9 +277,10 @@ async function getUsersByRole(roleNames, additionalOptions = {}) {
  * @param {Array<string>} userIds - Array of user IDs to enable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function enableUsers(userIds) {
     if (!Array.isArray(userIds) || userIds.length === 0) {
-        throw new Error("enableUsers expects a non-empty array of user IDs.");
+        throw new Error('enableUsers expects a non-empty array of user IDs.');
     }
 
     try {
@@ -291,15 +299,17 @@ async function enableUsers(userIds) {
         throw new Error(`Failed to enable users: ${error.message}`);
     }
 }
+*/
 
 /**
  * Disable users
  * @param {Array<string>} userIds - Array of user IDs to disable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function disableUsers(userIds) {
     if (!Array.isArray(userIds) || userIds.length === 0) {
-        throw new Error("disableUsers expects a non-empty array of user IDs.");
+        throw new Error('disableUsers expects a non-empty array of user IDs.');
     }
 
     try {
@@ -318,6 +328,7 @@ async function disableUsers(userIds) {
         throw new Error(`Failed to disable users: ${error.message}`);
     }
 }
+    */
 
 /**
  * Get user groups
@@ -342,7 +353,7 @@ async function getUserGroups(options = {}) {
  */
 async function getUserPermissions(userIds, additionalOptions = {}) {
     if (!Array.isArray(userIds) || userIds.length === 0) {
-        throw new Error("getUserPermissions expects a non-empty array of user IDs.");
+        throw new Error('getUserPermissions expects a non-empty array of user IDs.');
     }
 
     try {
@@ -370,7 +381,7 @@ async function getUserPermissions(userIds, additionalOptions = {}) {
  */
 async function getUserMedia(userIds, additionalOptions = {}) {
     if (!Array.isArray(userIds) || userIds.length === 0) {
-        throw new Error("getUserMedia expects a non-empty array of user IDs.");
+        throw new Error('getUserMedia expects a non-empty array of user IDs.');
     }
 
     try {
@@ -514,16 +525,16 @@ async function searchUsers(criteria = {}, additionalOptions = {}) {
 
 module.exports = {
     getUsers,
-    createUser,
-    updateUser,
-    deleteUsers,
+    //createUser,
+    //updateUser,
+    //deleteUsers,
     getUsersByUsername,
     getUsersByGroups,
     getActiveUsers,
     getUsersByType,
     getUsersByRole,
-    enableUsers,
-    disableUsers,
+    //enableUsers,
+    //disableUsers,
     getUserGroups,
     getUserPermissions,
     getUserMedia,

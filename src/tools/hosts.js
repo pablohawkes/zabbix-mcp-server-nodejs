@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 const api = require('../api');
 const { logger } = require('../utils/logger');
 const { z } = require('zod');
@@ -6,7 +7,7 @@ const schemas = require('./schemas');
 // Helper function to resolve host identifiers (ID, technical name, visible name, or IP) to host IDs
 async function resolveHostIdentifiers(identifiers) {
     if (!identifiers || identifiers.length === 0) {
-        return { resolvedHostIds: [], errors: ["No host identifiers provided."] };
+        return { resolvedHostIds: [], errors: ['No host identifiers provided.'] };
     }
 
     const resolvedHostIds = new Set();
@@ -18,7 +19,7 @@ async function resolveHostIdentifiers(identifiers) {
         try {
             // Check if it's a numeric ID
             if (/^\d+$/.test(identifier)) { 
-                const hostById = await api.getHosts({ hostids: [identifier], output: ["hostid"] });
+                const hostById = await api.getHosts({ hostids: [identifier], output: ['hostid'] });
                 if (hostById && hostById.length > 0) {
                     resolvedHostIds.add(identifier);
                     found = true;
@@ -26,10 +27,11 @@ async function resolveHostIdentifiers(identifiers) {
             }
             
             // Check if it's an IP address
+            // eslint-disable-next-line security/detect-unsafe-regex
             if (!found && (/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$|([0-9a-fA-F]{0,4}:){1,7}[0-9a-fA-F]{0,4}/.test(identifier))) { 
                 const interfaces = await api.getHostInterfaces({ 
                     filter: { ip: identifier }, 
-                    output: ["hostid"] 
+                    output: ['hostid'] 
                 });
                 if (interfaces && interfaces.length > 0) {
                     interfaces.forEach(iface => resolvedHostIds.add(iface.hostid));
@@ -41,7 +43,7 @@ async function resolveHostIdentifiers(identifiers) {
             if (!found) { 
                 let hosts = await api.getHosts({
                     filter: { host: [identifier] }, 
-                    output: ["hostid"]
+                    output: ['hostid']
                 });
                 if (hosts && hosts.length > 0) {
                     hosts.forEach(h => resolvedHostIds.add(h.hostid));
@@ -49,7 +51,7 @@ async function resolveHostIdentifiers(identifiers) {
                 } else {
                     hosts = await api.getHosts({
                         filter: { name: [identifier] }, 
-                        output: ["hostid"]
+                        output: ['hostid']
                     });
                     if (hosts && hosts.length > 0) {
                        hosts.forEach(h => resolvedHostIds.add(h.hostid));
@@ -82,12 +84,12 @@ function registerTools(server) {
         {
             hostIdentifiers: z.array(z.string()).optional()
                 .describe("Array of host technical names, visible names, or IP addresses to resolve to IDs for filtering. Use this OR direct filter options like 'hostids' or 'filter'."),
-            hostids: z.array(z.string()).optional().describe("Array of direct Zabbix Host IDs to retrieve."),
-            groupids: z.array(z.string()).optional().describe("Array of group IDs to filter hosts by."),
-            templateids: z.array(z.string()).optional().describe("Array of template IDs to filter hosts by."),
+            hostids: z.array(z.string()).optional().describe('Array of direct Zabbix Host IDs to retrieve.'),
+            groupids: z.array(z.string()).optional().describe('Array of group IDs to filter hosts by.'),
+            templateids: z.array(z.string()).optional().describe('Array of template IDs to filter hosts by.'),
             filter: z.record(z.any()).optional().describe("Filter criteria (e.g., { status: 0, host: 'webserver01' })."),
             search: z.record(z.any()).optional().describe("Wildcard search criteria (e.g., { host: 'web*' }). Will search in 'host' (technical name) and 'name' (visible name) fields primarily."),
-            output: schemas.outputFields.optional().default("extend")
+            output: schemas.outputFields.optional().default('extend')
                 .describe("Properties to return. Defaults to 'extend'. Common options: ['hostid', 'host', 'name', 'status', 'error', 'available']."),
             /*
             selectGroups: schemas.outputFields.optional().default("extend")
@@ -95,17 +97,17 @@ function registerTools(server) {
             */
             selectGroups: schemas.outputFields = z.union([z.string(),z.array(z.string())])
                 .describe("Include host group information. Use 'extend' for all group fields or specify an array like ['groupid', 'name']."),
-            selectInterfaces: schemas.outputFields.optional().default("extend")
+            selectInterfaces: schemas.outputFields.optional().default('extend')
                 .describe("Include host interface information. Use 'extend' for all interface fields or specify an array like ['interfaceid', 'ip', 'port', 'type']."),
-            selectParentTemplates: schemas.outputFields.optional().default("extend")
+            selectParentTemplates: schemas.outputFields.optional().default('extend')
                 .describe("Include linked parent template information. Use 'extend' for all template fields or specify an array like ['templateid', 'name']."),
             selectMacros: schemas.outputFields.optional().describe("Include host macros. Use 'extend' for all macro fields or specify an array like ['macro', 'value']."),
             selectInventory: schemas.outputFields.optional()
                 .describe("Include host inventory data. Use 'extend' for all inventory fields or specify an array of inventory property names (e.g. ['os', 'type'])."),
-            selectItems: schemas.outputFields.optional().describe("Include items from the host."),
-            selectTriggers: schemas.outputFields.optional().describe("Include triggers from the host."),
+            selectItems: schemas.outputFields.optional().describe('Include items from the host.'),
+            selectTriggers: schemas.outputFields.optional().describe('Include triggers from the host.'),
             //limit: z.number().int().positive().optional().describe("Maximum number of hosts to return."),
-            limit: z.number().int().min(1).optional().describe("Maximum number of hosts to return."),
+            limit: z.number().int().min(1).optional().describe('Maximum number of hosts to return.'),
             sortfield: z.union([z.string(), z.array(z.string())]).optional().describe("Field(s) to sort by (e.g., 'name', ['status', 'host'])."),
             sortorder: schemas.sortOrder.optional().describe("Sort order ('ASC' or 'DESC').")
         },

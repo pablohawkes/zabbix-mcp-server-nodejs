@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 const { request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -36,6 +37,7 @@ async function getMediaTypes(options = {}) {
  * @param {Object} mediaTypeData - Media type creation parameters
  * @returns {Promise<Object>} Creation result with mediatypeids
  */
+/*
 async function createMediaType(mediaTypeData) {
     try {
         logger.debug(`${config.logging.prefix} Creating media type: ${mediaTypeData.name}`);
@@ -53,12 +55,14 @@ async function createMediaType(mediaTypeData) {
         throw new Error(`Failed to create media type: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing media type
  * @param {Object} updateData - Media type update parameters (must include mediatypeid)
  * @returns {Promise<Object>} Update result with mediatypeids
  */
+/*
 async function updateMediaType(updateData) {
     try {
         logger.debug(`${config.logging.prefix} Updating media type: ${updateData.mediatypeid}`);
@@ -75,12 +79,14 @@ async function updateMediaType(updateData) {
         throw new Error(`Failed to update media type: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete media types
  * @param {Array<string>} mediaTypeIds - Array of media type IDs to delete
  * @returns {Promise<Object>} Deletion result with mediatypeids
  */
+/*
 async function deleteMediaTypes(mediaTypeIds) {
     try {
         logger.debug(`${config.logging.prefix} Deleting ${mediaTypeIds.length} media types`);
@@ -97,6 +103,7 @@ async function deleteMediaTypes(mediaTypeIds) {
         throw new Error(`Failed to delete media types: ${error.message}`);
     }
 }
+*/
 
 /**
  * Test media type delivery
@@ -395,7 +402,7 @@ async function getAlertsByStatus(status, options = {}) {
         }
         
         const params = {
-            filter: { status: status },
+            filter: { status },
             output: 'extend',
             selectHosts: ['hostid', 'name'],
             selectUsers: ['userid', 'username'],
@@ -604,9 +611,9 @@ function getAlertTypeText(alerttype) {
 module.exports = {
     // Core CRUD operations
     getMediaTypes,
-    createMediaType,
-    updateMediaType,
-    deleteMediaTypes,
+    //createMediaType,
+    //updateMediaType,
+    //deleteMediaTypes,
     testMediaType,
     
     // Enhanced query functions
@@ -635,9 +642,9 @@ module.exports = {
     // Backward compatibility
     mediaApi: {
         get: getMediaTypes,
-        create: createMediaType,
-        update: updateMediaType,
-        delete: deleteMediaTypes,
+        //create: createMediaType,
+        //update: updateMediaType,
+        //delete: deleteMediaTypes,
         test: testMediaType,
         getUserMedia,
         getAlerts

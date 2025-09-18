@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Zabbix API Client using zabbix-utils library
  * 
@@ -28,7 +29,7 @@ class ZabbixClient {
         logger.info(`[ZABBIX CLIENT DEBUG] initialize() called, current state: isConnected=${this.isConnected}, api=${!!this.api}`);
         
         if (this.api && this.isConnected) {
-            logger.info(`[ZABBIX CLIENT DEBUG] Already initialized and connected, returning existing API`);
+            logger.info('[ZABBIX CLIENT DEBUG] Already initialized and connected, returning existing API');
             return this.api;
         }
 
@@ -49,13 +50,13 @@ class ZabbixClient {
                 skipVersionCheck: true
             };
 
-            logger.info(`[ZABBIX CLIENT DEBUG] Base clientConfig:`, JSON.stringify(clientConfig, null, 2));
+            logger.info('[ZABBIX CLIENT DEBUG] Base clientConfig:', JSON.stringify(clientConfig, null, 2));
 
             if (config.api.authMethod === 'token') {
                 // API Token authentication (Zabbix 5.4+)
                 clientConfig.token = config.api.apiToken;
                 logger.info(`${config.logging.prefix} Using API token authentication`);
-                logger.info(`[ZABBIX CLIENT DEBUG] Added token to clientConfig`);
+                logger.info('[ZABBIX CLIENT DEBUG] Added token to clientConfig');
             } else if (config.api.authMethod === 'password') {
                 // Username/Password authentication (traditional)
                 // Note: zabbix-utils library expects 'user' and 'password' properties
@@ -64,7 +65,7 @@ class ZabbixClient {
                 logger.info(`${config.logging.prefix} Using username/password authentication`);
                 logger.debug(`${config.logging.prefix} Debug - config.api.username: ${config.api.username ? 'SET' : 'UNDEFINED'}, config.api.password: ${config.api.password ? 'SET' : 'UNDEFINED'}`);
                 logger.debug(`${config.logging.prefix} Debug - clientConfig.user: ${clientConfig.user ? 'SET' : 'UNDEFINED'}, clientConfig.password: ${clientConfig.password ? 'SET' : 'UNDEFINED'}`);
-                logger.info(`[ZABBIX CLIENT DEBUG] Added username/password to clientConfig`);
+                logger.info('[ZABBIX CLIENT DEBUG] Added username/password to clientConfig');
 
             } else {
                 const errorMsg = 'No valid authentication credentials provided. Set ZABBIX_API_TOKEN or ZABBIX_PASSWORD environment variable.';
@@ -72,24 +73,24 @@ class ZabbixClient {
                 throw new Error(errorMsg);
             }
 
-            logger.info(`[ZABBIX CLIENT DEBUG] Final clientConfig:`, JSON.stringify({...clientConfig, password: clientConfig.password ? '***' : undefined}, null, 2));
-            logger.info(`[ZABBIX CLIENT DEBUG] About to create AsyncZabbixAPI instance...`);
+            logger.info('[ZABBIX CLIENT DEBUG] Final clientConfig:', JSON.stringify({...clientConfig, password: clientConfig.password ? '***' : undefined}, null, 2));
+            logger.info('[ZABBIX CLIENT DEBUG] About to create AsyncZabbixAPI instance...');
             
             this.api = new AsyncZabbixAPI(clientConfig);
-            logger.info(`[ZABBIX CLIENT DEBUG] AsyncZabbixAPI instance created successfully`);
+            logger.info('[ZABBIX CLIENT DEBUG] AsyncZabbixAPI instance created successfully');
 
             // For username/password auth, login is required
             if (config.api.authMethod === 'password') {
-                logger.info(`[ZABBIX CLIENT DEBUG] Password auth detected, calling login...`);
+                logger.info('[ZABBIX CLIENT DEBUG] Password auth detected, calling login...');
                 await this.api.login(null, config.api.username, config.api.password);
-                logger.info(`[ZABBIX CLIENT DEBUG] Login completed successfully`);
+                logger.info('[ZABBIX CLIENT DEBUG] Login completed successfully');
             }
             
             // Get API version to verify connection
-            logger.info(`[ZABBIX CLIENT DEBUG] About to call apiVersion() to verify connection...`);
+            logger.info('[ZABBIX CLIENT DEBUG] About to call apiVersion() to verify connection...');
             const version = await this.api.apiVersion();
             logger.info(`${config.logging.prefix} Connected to Zabbix API version: ${version}`);
-            logger.info(`[ZABBIX CLIENT DEBUG] Connection verified successfully`);
+            logger.info('[ZABBIX CLIENT DEBUG] Connection verified successfully');
             
             this.isConnected = true;
             this.lastConnectionAttempt = Date.now();
@@ -98,8 +99,8 @@ class ZabbixClient {
         } catch (error) {
             this.isConnected = false;
             this.lastConnectionAttempt = Date.now();
-            logger.error(`[ZABBIX CLIENT DEBUG] Initialization failed:`, error.message);
-            logger.error(`[ZABBIX CLIENT DEBUG] Error stack:`, error.stack);
+            logger.error('[ZABBIX CLIENT DEBUG] Initialization failed:', error.message);
+            logger.error('[ZABBIX CLIENT DEBUG] Error stack:', error.stack);
             logger.error(`${config.logging.prefix} Failed to initialize Zabbix API client:`, error.message);
             throw new Error(`Zabbix API initialization failed: ${error.message}`);
         }
@@ -189,7 +190,7 @@ class ZabbixClient {
         logger.info(`[ZABBIX CLIENT DEBUG] Current connection status: isConnected=${this.isConnected}, api=${!!this.api}`);
         
         const client = await this.getClient();
-        logger.info(`[ZABBIX CLIENT DEBUG] getClient() returned, client type:`, typeof client);
+        logger.info('[ZABBIX CLIENT DEBUG] getClient() returned, client type:', typeof client);
         
         try {
             // Parse method to object.method format for dynamic calling
@@ -212,7 +213,7 @@ class ZabbixClient {
             return result;
         } catch (error) {
             logger.error(`[ZABBIX CLIENT DEBUG] API call failed: ${method}, error:`, error.message);
-            logger.error(`[ZABBIX CLIENT DEBUG] Error stack:`, error.stack);
+            logger.error('[ZABBIX CLIENT DEBUG] Error stack:', error.stack);
             logger.error(`${config.logging.prefix} API call failed: ${method}`, error.message);
             
             // Check if it's an authentication error and try to reconnect (only for password auth)

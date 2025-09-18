@@ -5,6 +5,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
+// eslint-disable-next-line no-unused-vars
 const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -29,6 +30,7 @@ async function getItems(options = {}) {
  * @param {Object} params - Item creation parameters
  * @returns {Promise<Object>} Created item information
  */
+/*
 async function createItem(params) {
     // Validate required parameters
     if (!params.name || !params.key_ || !params.hostid || 
@@ -53,12 +55,14 @@ async function createItem(params) {
         throw new Error(`Failed to create item: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing item in Zabbix
  * @param {Object} params - Item update parameters (must include itemid)
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateItem(params) {
     if (!params || !params.itemid) {
         throw new Error("Parameter 'itemid' is required for updating an item.");
@@ -74,15 +78,17 @@ async function updateItem(params) {
         throw new Error(`Failed to update item: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete items from Zabbix
  * @param {Array<string>} itemIds - Array of item IDs to delete
  * @returns {Promise<Object>} Deletion result
  */
+/*
 async function deleteItems(itemIds) {
     if (!Array.isArray(itemIds) || itemIds.length === 0 || !itemIds.every(id => typeof id === 'string')) {
-        throw new Error("deleteItems expects a non-empty array of string item IDs.");
+        throw new Error('deleteItems expects a non-empty array of string item IDs.');
     }
 
     try {
@@ -95,6 +101,7 @@ async function deleteItems(itemIds) {
         throw new Error(`Failed to delete items: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get items by single host ID
@@ -104,7 +111,7 @@ async function deleteItems(itemIds) {
  */
 async function getItemsByHost(hostId, additionalOptions = {}) {
     if (!hostId) {
-        throw new Error("getItemsByHost expects a host ID.");
+        throw new Error('getItemsByHost expects a host ID.');
     }
 
     try {
@@ -132,7 +139,7 @@ async function getItemsByHost(hostId, additionalOptions = {}) {
  */
 async function getItemsByHosts(hostIds, additionalOptions = {}) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
-        throw new Error("getItemsByHosts expects a non-empty array of host IDs.");
+        throw new Error('getItemsByHosts expects a non-empty array of host IDs.');
     }
 
     try {
@@ -187,7 +194,7 @@ async function getItemsByKey(keyPatterns, additionalOptions = {}) {
  */
 async function getLatestData(itemIds, additionalOptions = {}) {
     if (!Array.isArray(itemIds) || itemIds.length === 0) {
-        throw new Error("getLatestData expects a non-empty array of item IDs.");
+        throw new Error('getLatestData expects a non-empty array of item IDs.');
     }
 
     try {
@@ -212,9 +219,10 @@ async function getLatestData(itemIds, additionalOptions = {}) {
  * @param {Array<string>} itemIds - Array of item IDs to enable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function enableItems(itemIds) {
     if (!Array.isArray(itemIds) || itemIds.length === 0) {
-        throw new Error("enableItems expects a non-empty array of item IDs.");
+        throw new Error('enableItems expects a non-empty array of item IDs.');
     }
 
     try {
@@ -237,15 +245,17 @@ async function enableItems(itemIds) {
         throw new Error(`Failed to enable items: ${error.message}`);
     }
 }
+*/
 
 /**
  * Disable items
  * @param {Array<string>} itemIds - Array of item IDs to disable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function disableItems(itemIds) {
     if (!Array.isArray(itemIds) || itemIds.length === 0) {
-        throw new Error("disableItems expects a non-empty array of item IDs.");
+        throw new Error('disableItems expects a non-empty array of item IDs.');
     }
 
     try {
@@ -268,6 +278,7 @@ async function disableItems(itemIds) {
         throw new Error(`Failed to disable items: ${error.message}`);
     }
 }
+    */
 
 /**
  * Get item prototypes (for discovery rules)
@@ -289,6 +300,7 @@ async function getItemPrototypes(options = {}) {
  * @param {Object} params - Item prototype creation parameters
  * @returns {Promise<Object>} Created item prototype information
  */
+/*
 async function createItemPrototype(params) {
     if (!params.name || !params.key_ || !params.ruleid || 
         typeof params.type === 'undefined' || typeof params.value_type === 'undefined') {
@@ -305,6 +317,7 @@ async function createItemPrototype(params) {
         throw new Error(`Failed to create item prototype: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get items with specific value types
@@ -314,7 +327,7 @@ async function createItemPrototype(params) {
  */
 async function getItemsByValueType(valueTypes, additionalOptions = {}) {
     if (!Array.isArray(valueTypes) || valueTypes.length === 0) {
-        throw new Error("getItemsByValueType expects a non-empty array of value type IDs.");
+        throw new Error('getItemsByValueType expects a non-empty array of value type IDs.');
     }
 
     try {
@@ -337,16 +350,16 @@ async function getItemsByValueType(valueTypes, additionalOptions = {}) {
 
 module.exports = {
     getItems,
-    createItem,
-    updateItem,
-    deleteItems,
+    //createItem,
+    //updateItem,
+    //deleteItems,
     getItemsByHost,
     getItemsByHosts,
     getItemsByKey,
     getLatestData,
-    enableItems,
-    disableItems,
+    //enableItems,
+    //disableItems,
     getItemPrototypes,
-    createItemPrototype,
+    //createItemPrototype,
     getItemsByValueType
 }; 

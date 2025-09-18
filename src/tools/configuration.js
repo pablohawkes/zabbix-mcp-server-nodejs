@@ -26,7 +26,7 @@ function registerTools(server) {
                 proxy_groups: z.array(z.string()).optional().describe('Array of proxy group IDs to export'),
                 proxies: z.array(z.string()).optional().describe('Array of proxy IDs to export')
             }).refine(data => Object.keys(data).length > 0, {
-                message: "At least one entity type must be specified for export"
+                message: 'At least one entity type must be specified for export'
             }).describe('Specifies which configuration objects to export')
         },
         async (args) => {

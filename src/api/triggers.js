@@ -5,7 +5,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
-const { getClient, request } = require('./zabbix-client');
+const { request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
 
@@ -29,6 +29,7 @@ async function getTriggers(options = {}) {
  * @param {Object} params - Trigger creation parameters
  * @returns {Promise<Object>} Created trigger information
  */
+/*
 async function createTrigger(params) {
     // Validate required parameters
     if (!params.description || !params.expression) {
@@ -45,12 +46,14 @@ async function createTrigger(params) {
         throw new Error(`Failed to create trigger: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing trigger in Zabbix
  * @param {Object} params - Trigger update parameters (must include triggerid)
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateTrigger(params) {
     if (!params || !params.triggerid) {
         throw new Error("Parameter 'triggerid' is required for updating a trigger.");
@@ -66,15 +69,17 @@ async function updateTrigger(params) {
         throw new Error(`Failed to update trigger: ${error.message}`);
     }
 }
+*/ 
 
 /**
  * Delete triggers from Zabbix
  * @param {Array<string>} triggerIds - Array of trigger IDs to delete
  * @returns {Promise<Object>} Deletion result
  */
+/*
 async function deleteTriggers(triggerIds) {
     if (!Array.isArray(triggerIds) || triggerIds.length === 0 || !triggerIds.every(id => typeof id === 'string')) {
-        throw new Error("deleteTriggers expects a non-empty array of string trigger IDs.");
+        throw new Error('deleteTriggers expects a non-empty array of string trigger IDs.');
     }
 
     try {
@@ -87,6 +92,7 @@ async function deleteTriggers(triggerIds) {
         throw new Error(`Failed to delete triggers: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get triggers by single host ID
@@ -96,7 +102,7 @@ async function deleteTriggers(triggerIds) {
  */
 async function getTriggersByHost(hostId, additionalOptions = {}) {
     if (!hostId) {
-        throw new Error("getTriggersByHost expects a host ID.");
+        throw new Error('getTriggersByHost expects a host ID.');
     }
 
     try {
@@ -126,7 +132,7 @@ async function getTriggersByHost(hostId, additionalOptions = {}) {
  */
 async function getTriggersByHosts(hostIds, additionalOptions = {}) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
-        throw new Error("getTriggersByHosts expects a non-empty array of host IDs.");
+        throw new Error('getTriggersByHosts expects a non-empty array of host IDs.');
     }
 
     try {
@@ -154,7 +160,7 @@ async function getTriggersByHosts(hostIds, additionalOptions = {}) {
  */
 async function getTriggersByPriority(priorities, additionalOptions = {}) {
     if (!Array.isArray(priorities) || priorities.length === 0) {
-        throw new Error("getTriggersByPriority expects a non-empty array of priority levels.");
+        throw new Error('getTriggersByPriority expects a non-empty array of priority levels.');
     }
 
     try {
@@ -209,9 +215,10 @@ async function getActiveTriggers(additionalOptions = {}) {
  * @param {Array<string>} triggerIds - Array of trigger IDs to enable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function enableTriggers(triggerIds) {
     if (!Array.isArray(triggerIds) || triggerIds.length === 0) {
-        throw new Error("enableTriggers expects a non-empty array of trigger IDs.");
+        throw new Error('enableTriggers expects a non-empty array of trigger IDs.');
     }
 
     try {
@@ -234,15 +241,17 @@ async function enableTriggers(triggerIds) {
         throw new Error(`Failed to enable triggers: ${error.message}`);
     }
 }
+*/
 
 /**
  * Disable triggers
  * @param {Array<string>} triggerIds - Array of trigger IDs to disable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function disableTriggers(triggerIds) {
     if (!Array.isArray(triggerIds) || triggerIds.length === 0) {
-        throw new Error("disableTriggers expects a non-empty array of trigger IDs.");
+        throw new Error('disableTriggers expects a non-empty array of trigger IDs.');
     }
 
     try {
@@ -265,6 +274,7 @@ async function disableTriggers(triggerIds) {
         throw new Error(`Failed to disable triggers: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get trigger prototypes (for discovery rules)
@@ -286,6 +296,7 @@ async function getTriggerPrototypes(options = {}) {
  * @param {Object} params - Trigger prototype creation parameters
  * @returns {Promise<Object>} Created trigger prototype information
  */
+/*
 async function createTriggerPrototype(params) {
     if (!params.description || !params.expression) {
         throw new Error("Parameters 'description' and 'expression' are required for creating a trigger prototype.");
@@ -301,6 +312,7 @@ async function createTriggerPrototype(params) {
         throw new Error(`Failed to create trigger prototype: ${error.message}`);
     }
 }
+    */
 
 /**
  * Get triggers by template IDs
@@ -310,7 +322,7 @@ async function createTriggerPrototype(params) {
  */
 async function getTriggersByTemplates(templateIds, additionalOptions = {}) {
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
-        throw new Error("getTriggersByTemplates expects a non-empty array of template IDs.");
+        throw new Error('getTriggersByTemplates expects a non-empty array of template IDs.');
     }
 
     try {
@@ -355,17 +367,17 @@ async function getTriggersWithDependencies(additionalOptions = {}) {
 
 module.exports = {
     getTriggers,
-    createTrigger,
-    updateTrigger,
-    deleteTriggers,
+    //createTrigger,
+    //updateTrigger,
+    //deleteTriggers,
     getTriggersByHost,
     getTriggersByHosts,
     getTriggersByPriority,
     getActiveTriggers,
-    enableTriggers,
-    disableTriggers,
+    //enableTriggers,
+    //disableTriggers,
     getTriggerPrototypes,
-    createTriggerPrototype,
+    //createTriggerPrototype,
     getTriggersByTemplates,
     getTriggersWithDependencies
 }; 

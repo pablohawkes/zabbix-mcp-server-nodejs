@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Problems API Module - Refactored to use zabbix-utils
  * 
@@ -5,6 +6,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
+// eslint-disable-next-line no-unused-vars
 const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -58,7 +60,7 @@ async function getActiveProblems(additionalOptions = {}) {
  */
 async function getProblemsByHost(hostId, additionalOptions = {}) {
     if (!hostId) {
-        throw new Error("getProblemsByHost expects a host ID.");
+        throw new Error('getProblemsByHost expects a host ID.');
     }
 
     try {
@@ -91,7 +93,7 @@ async function getProblemsByHost(hostId, additionalOptions = {}) {
  */
 async function getProblemsByHosts(hostIds, additionalOptions = {}) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
-        throw new Error("getProblemsByHosts expects a non-empty array of host IDs.");
+        throw new Error('getProblemsByHosts expects a non-empty array of host IDs.');
     }
 
     try {
@@ -122,7 +124,7 @@ async function getProblemsByHosts(hostIds, additionalOptions = {}) {
  */
 async function getProblemsBySeverity(severities, additionalOptions = {}) {
     if (!Array.isArray(severities) || severities.length === 0) {
-        throw new Error("getProblemsBySeverity expects a non-empty array of severity levels.");
+        throw new Error('getProblemsBySeverity expects a non-empty array of severity levels.');
     }
 
     try {
@@ -130,7 +132,7 @@ async function getProblemsBySeverity(severities, additionalOptions = {}) {
         
         const options = {
             output: ['eventid', 'objectid', 'name', 'severity', 'clock', 'acknowledged'],
-            severities: severities,
+            severities,
             selectHosts: ['hostid', 'host', 'name'],
             selectTriggers: ['triggerid', 'description', 'priority'],
             sortfield: ['severity', 'clock'],
@@ -180,7 +182,7 @@ async function getUnacknowledgedProblems(additionalOptions = {}) {
  */
 async function getRecentProblems(timeFrom, timeTill = null, additionalOptions = {}) {
     if (!timeFrom || typeof timeFrom !== 'number') {
-        throw new Error("getRecentProblems expects a valid timeFrom Unix timestamp.");
+        throw new Error('getRecentProblems expects a valid timeFrom Unix timestamp.');
     }
 
     try {
@@ -263,6 +265,7 @@ async function getProblemStatistics(additionalOptions = {}) {
  */
 async function getProblemsWithTags(tags, additionalOptions = {}) {
     if (!Array.isArray(tags) || tags.length === 0) {
+        // eslint-disable-next-line quotes
         throw new Error("getProblemsWithTags expects a non-empty array of tag objects.");
     }
 
@@ -271,7 +274,7 @@ async function getProblemsWithTags(tags, additionalOptions = {}) {
         
         const options = {
             output: ['eventid', 'objectid', 'name', 'severity', 'clock', 'acknowledged'],
-            tags: tags,
+            tags,
             selectHosts: ['hostid', 'host', 'name'],
             selectTriggers: ['triggerid', 'description', 'priority'],
             selectTags: ['tag', 'value'],
@@ -317,7 +320,7 @@ async function getProblemCount(options = {}) {
  */
 async function getProblemsByTriggers(triggerIds, additionalOptions = {}) {
     if (!Array.isArray(triggerIds) || triggerIds.length === 0) {
-        throw new Error("getProblemsByTriggers expects a non-empty array of trigger IDs.");
+        throw new Error('getProblemsByTriggers expects a non-empty array of trigger IDs.');
     }
 
     try {
@@ -362,9 +365,9 @@ async function getEvents(options = {}) {
  * @param {Object} actionOptions - Action options (action, severity, suppress_until)
  * @returns {Promise<Object>} Acknowledgment result
  */
-async function acknowledgeEvent(eventIds, message = "Acknowledged via MCP", actionOptions = {}) {
+async function acknowledgeEvent(eventIds, message = 'Acknowledged via MCP', actionOptions = {}) {
     if (!Array.isArray(eventIds) || eventIds.length === 0) {
-        throw new Error("acknowledgeEvent expects a non-empty array of event IDs.");
+        throw new Error('acknowledgeEvent expects a non-empty array of event IDs.');
     }
 
     try {
@@ -372,7 +375,7 @@ async function acknowledgeEvent(eventIds, message = "Acknowledged via MCP", acti
         
         const params = {
             eventids: eventIds,
-            message: message,
+            message,
             action: actionOptions.action || 6, // Default: acknowledge + add message
             ...actionOptions
         };

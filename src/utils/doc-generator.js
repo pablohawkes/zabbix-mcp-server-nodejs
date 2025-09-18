@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * UpGuard CyberRisk MCP Server - Documentation Generator
  * 

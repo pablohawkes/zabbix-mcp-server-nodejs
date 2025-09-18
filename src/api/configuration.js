@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Enhanced Configuration API Module
  * 
@@ -17,7 +18,8 @@
  * @since 2025-06-24
  */
 
-const { request } = require('./zabbix-client');
+// eslint-disable-next-line no-unused-vars
+const { getClient, request } = require('./zabbix-client');
 
 // =============================================================================
 // CONFIGURATION IMPORT/EXPORT
@@ -75,6 +77,7 @@ async function exportConfiguration(options = {}) {
  * @param {Object} params - Import parameters
  * @returns {Promise<Object>} Import result with detailed feedback
  */
+/*
 async function importConfiguration(params) {
     if (!params.source) {
         throw new Error('Configuration source is required for import');
@@ -132,6 +135,7 @@ async function importConfiguration(params) {
         };
     }
 }
+    */
 
 /**
  * Validate configuration before import
@@ -152,7 +156,7 @@ async function validateConfiguration(configData) {
     
     try {
         // Perform dry-run import to validate
-        const testImport = await request('configuration.import', {
+        await request('configuration.import', {
             ...configData,
             rules: {
                 ...configData.rules,
@@ -188,7 +192,8 @@ async function validateConfiguration(configData) {
  * @param {Object} [options] - Comparison options
  * @returns {Promise<Object>} Configuration diff report
  */
-async function compareConfigurations(config1, config2, options = {}) {
+//async function compareConfigurations(config1, config2, options = {}) {
+async function compareConfigurations(config1, config2) {
     const comparison = {
         summary: {
             identical: true,
@@ -245,6 +250,7 @@ async function compareConfigurations(config1, config2, options = {}) {
  * @param {Object} [options] - Backup options
  * @returns {Promise<Object>} Backup result with metadata
  */
+/*
 async function createConfigurationBackup(options = {}) {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     
@@ -286,6 +292,7 @@ async function createConfigurationBackup(options = {}) {
         }
     };
 }
+*/
 
 // =============================================================================
 // SYSTEM SETTINGS MANAGEMENT
@@ -313,15 +320,15 @@ async function getSystemSettings(options = {}) {
     Object.entries(settings).forEach(([key, value]) => {
         const category = categorizeSettingKey(key);
         categorizedSettings[category][key] = {
-            value: value,
-            category: category,
+            value,
+            category,
             type: typeof value,
             description: getSettingDescription(key)
         };
     });
     
     return {
-        settings: settings,
+        settings,
         categorized: categorizedSettings,
         metadata: {
             totalSettings: Object.keys(settings).length,
@@ -339,6 +346,7 @@ async function getSystemSettings(options = {}) {
  * @param {Object} settingsUpdate - Settings to update
  * @returns {Promise<Object>} Update result with validation
  */
+/*
 async function updateSystemSettings(settingsUpdate) {
     if (!settingsUpdate || Object.keys(settingsUpdate).length === 0) {
         throw new Error('Settings update object is required');
@@ -380,6 +388,7 @@ async function updateSystemSettings(settingsUpdate) {
         };
     }
 }
+*/
 
 // =============================================================================
 // CONFIGURATION TEMPLATES AND PROFILES
@@ -390,6 +399,7 @@ async function updateSystemSettings(settingsUpdate) {
  * @param {Object} templateOptions - Template creation options
  * @returns {Promise<Object>} Configuration template
  */
+/*
 async function createConfigurationTemplate(templateOptions) {
     const template = {
         name: templateOptions.name || `Template_${Date.now()}`,
@@ -423,6 +433,7 @@ async function createConfigurationTemplate(templateOptions) {
     
     return template;
 }
+*/
 
 /**
  * Apply configuration template
@@ -430,6 +441,7 @@ async function createConfigurationTemplate(templateOptions) {
  * @param {Object} [options] - Application options
  * @returns {Promise<Object>} Application result
  */
+/*
 async function applyConfigurationTemplate(template, options = {}) {
     if (!template || !template.components) {
         throw new Error('Valid configuration template is required');
@@ -478,6 +490,7 @@ async function applyConfigurationTemplate(template, options = {}) {
     
     return results;
 }
+*/
 
 // =============================================================================
 // CONFIGURATION ANALYTICS
@@ -488,7 +501,8 @@ async function applyConfigurationTemplate(template, options = {}) {
  * @param {Object} [options] - Analytics options
  * @returns {Promise<Object>} Configuration analytics
  */
-async function getConfigurationAnalytics(options = {}) {
+//async function getConfigurationAnalytics(options = {}) {
+async function getConfigurationAnalytics() {
     const analytics = {
         overview: {},
         complexity: {},
@@ -592,7 +606,7 @@ function compareConfigurationSection(section1, section2, sectionName) {
             result.differences.push({
                 type: 'added',
                 section: sectionName,
-                id: id
+                id
             });
         }
     });
@@ -604,7 +618,7 @@ function compareConfigurationSection(section1, section2, sectionName) {
             result.differences.push({
                 type: 'removed',
                 section: sectionName,
-                id: id
+                id
             });
         }
     });
@@ -661,6 +675,7 @@ function getSettingDescription(key) {
  * @param {Object} settingsUpdate - Settings to validate
  * @returns {Object} Validation result
  */
+/*
 function validateSettingsUpdate(settingsUpdate) {
     const validation = {
         isValid: true,
@@ -688,6 +703,7 @@ function validateSettingsUpdate(settingsUpdate) {
     
     return validation;
 }
+*/
 
 /**
  * Calculate configuration complexity score
@@ -754,20 +770,20 @@ function generateConfigurationRecommendations(analytics) {
 module.exports = {
     // Import/Export
     exportConfiguration,
-    importConfiguration,
+    //importConfiguration,
     validateConfiguration,
     
     // Comparison and Backup
     compareConfigurations,
-    createConfigurationBackup,
+    //createConfigurationBackup,
     
     // System Settings
     getSystemSettings,
-    updateSystemSettings,
+    //updateSystemSettings,
     
     // Templates and Profiles
-    createConfigurationTemplate,
-    applyConfigurationTemplate,
+    //createConfigurationTemplate,
+    //applyConfigurationTemplate,
     
     // Analytics
     getConfigurationAnalytics,
@@ -775,8 +791,8 @@ module.exports = {
     // Legacy compatibility export
     configurationApi: {
         export: exportConfiguration,
-        import: importConfiguration,
-        compare: compareConfigurations,
-        backup: createConfigurationBackup
+        //import: importConfiguration,
+        compare: compareConfigurations//,
+        //backup: createConfigurationBackup
     }
 }; 

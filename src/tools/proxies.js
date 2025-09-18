@@ -14,7 +14,7 @@ function registerTools(server) {
             selectProxyGroups: z.array(z.string()).optional().describe('Return proxy groups the proxy belongs to'),
             filter: z.record(z.any()).optional().describe('Return only proxies that match the given filter'),
             search: z.record(z.any()).optional().describe('Return only proxies that match the given wildcard search'),
-            sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
+            //sortfield: z.array(z.string()).optional().default(['name']).describe('Sort the result by the given properties'),
             //sortorder: z.enum(['ASC', 'DESC']).optional().default('ASC').describe('Sort order'),
             //limit: z.number().int().positive().optional().describe('Limit the number of records returned')
             limit: z.number().int().min(1).optional().describe('Limit the number of records returned')
@@ -24,9 +24,9 @@ function registerTools(server) {
                 const params = { ...args };
                 
                 const apiParams = {
-                    output: params.output || ['proxyid', 'name', 'operating_mode', 'address', 'port', 'description'],
-                    sortfield: params.sortfield || ['name'],
-                    sortorder: params.sortorder || 'ASC'
+                    output: params.output || ['proxyid', 'name', 'operating_mode', 'address', 'port', 'description']//,
+                    //sortfield: params.sortfield || ['name'],
+                    //sortorder: params.sortorder || 'ASC'
                 };
 
                 if (params.proxyids) apiParams.proxyids = params.proxyids;
@@ -35,8 +35,7 @@ function registerTools(server) {
                 if (params.filter) apiParams.filter = params.filter;
                 if (params.search) apiParams.search = params.search;
                 if (params.limit) apiParams.limit = params.limit;
-
-                const proxies = await api.getProxies(apiParams);
+const proxies = await api.getProxies(apiParams);
                 
                 logger.info(`Retrieved ${proxies.length} proxies`);
                 return {

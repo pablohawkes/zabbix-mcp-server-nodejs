@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Host Groups API Module - Refactored to use zabbix-utils
  * 
@@ -5,6 +6,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
+// eslint-disable-next-line no-unused-vars
 const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -29,6 +31,7 @@ async function getHostGroups(options = {}) {
  * @param {Object} params - Host group creation parameters
  * @returns {Promise<Object>} Created host group information
  */
+/*
 async function createHostGroup(params) {
     // Validate required parameters
     if (!params.name) {
@@ -45,12 +48,14 @@ async function createHostGroup(params) {
         throw new Error(`Failed to create host group: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing host group in Zabbix
  * @param {Object} params - Host group update parameters (must include groupid)
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateHostGroup(params) {
     if (!params || !params.groupid) {
         throw new Error("Parameter 'groupid' is required for updating a host group.");
@@ -66,12 +71,14 @@ async function updateHostGroup(params) {
         throw new Error(`Failed to update host group: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete host groups from Zabbix
  * @param {Array<string>} groupIds - Array of host group IDs to delete
  * @returns {Promise<Object>} Deletion result
  */
+/*
 async function deleteHostGroups(groupIds) {
     if (!Array.isArray(groupIds) || groupIds.length === 0 || !groupIds.every(id => typeof id === 'string')) {
         throw new Error("deleteHostGroups expects a non-empty array of string group IDs.");
@@ -87,6 +94,7 @@ async function deleteHostGroups(groupIds) {
         throw new Error(`Failed to delete host groups: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get host groups by name pattern
@@ -124,7 +132,7 @@ async function getHostGroupsByName(namePatterns, additionalOptions = {}) {
  */
 async function getHostsInGroups(groupIds, additionalOptions = {}) {
     if (!Array.isArray(groupIds) || groupIds.length === 0) {
-        throw new Error("getHostsInGroups expects a non-empty array of group IDs.");
+        throw new Error('getHostsInGroups expects a non-empty array of group IDs.');
     }
 
     try {
@@ -152,7 +160,7 @@ async function getHostsInGroups(groupIds, additionalOptions = {}) {
  */
 async function getTemplatesInGroups(groupIds, additionalOptions = {}) {
     if (!Array.isArray(groupIds) || groupIds.length === 0) {
-        throw new Error("getTemplatesInGroups expects a non-empty array of group IDs.");
+        throw new Error('getTemplatesInGroups expects a non-empty array of group IDs.');
     }
 
     try {
@@ -178,6 +186,7 @@ async function getTemplatesInGroups(groupIds, additionalOptions = {}) {
  * @param {Array<string>} groupIds - Array of group IDs to add hosts to
  * @returns {Promise<Object>} Update result
  */
+/*
 async function addHostsToGroups(hostIds, groupIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
         throw new Error("addHostsToGroups expects a non-empty array of host IDs.");
@@ -217,6 +226,7 @@ async function addHostsToGroups(hostIds, groupIds) {
         throw new Error(`Failed to add hosts to groups: ${error.message}`);
     }
 }
+*/
 
 /**
  * Remove hosts from host groups
@@ -224,6 +234,7 @@ async function addHostsToGroups(hostIds, groupIds) {
  * @param {Array<string>} groupIds - Array of group IDs to remove hosts from
  * @returns {Promise<Object>} Update result
  */
+/*
 async function removeHostsFromGroups(hostIds, groupIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
         throw new Error("removeHostsFromGroups expects a non-empty array of host IDs.");
@@ -268,6 +279,7 @@ async function removeHostsFromGroups(hostIds, groupIds) {
         throw new Error(`Failed to remove hosts from groups: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get host group statistics
@@ -381,7 +393,8 @@ async function getEmptyHostGroups(additionalOptions = {}) {
  * @param {Object} additionalOptions - Additional options for the query
  * @returns {Promise<Array>} Array of host groups sorted by host count
  */
-async function getTopHostGroups(limit = 10, additionalOptions = {}) {
+//async function getTopHostGroups(limit = 10, additionalOptions = {}) {
+async function getTopHostGroups(limit = 10) {
     try {
         logger.debug(`${config.logging.prefix} Getting top ${limit} host groups by host count`);
         
@@ -463,14 +476,14 @@ async function searchHostGroups(criteria = {}, additionalOptions = {}) {
 
 module.exports = {
     getHostGroups,
-    createHostGroup,
-    updateHostGroup,
-    deleteHostGroups,
+    //createHostGroup,
+    //updateHostGroup,
+    //deleteHostGroups,
     getHostGroupsByName,
     getHostsInGroups,
     getTemplatesInGroups,
-    addHostsToGroups,
-    removeHostsFromGroups,
+    //addHostsToGroups,
+    //removeHostsFromGroups,
     getHostGroupStatistics,
     getEmptyHostGroups,
     getTopHostGroups,

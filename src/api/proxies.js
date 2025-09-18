@@ -30,9 +30,9 @@ const { request } = require('./zabbix-client');
 async function getProxies(options = {}) {
     const defaultOptions = {
         output: 'extend',
-        selectHosts: 'extend',
-        sortfield: ['name'],
-        sortorder: 'ASC'
+        selectHosts: 'extend'//,
+        //sortfield: ['name'],
+        //sortorder: 'ASC'
     };
     
     const params = { ...defaultOptions, ...options };
@@ -146,6 +146,7 @@ async function getProxiesByAvailability(isAvailable, options = {}) {
  * @param {Object} params - Proxy creation parameters
  * @returns {Promise<Object>} Creation result with proxyids
  */
+/*
 async function createProxy(params) {
     if (!params.host) {
         throw new Error('Proxy host name is required');
@@ -164,12 +165,14 @@ async function createProxy(params) {
     
     return await request('proxy.create', defaultParams);
 }
+*/
 
 /**
  * Update an existing proxy
  * @param {Object} params - Proxy update parameters (must include proxyid)
  * @returns {Promise<Object>} Update result with proxyids
  */
+/*
 async function updateProxy(params) {
     if (!params.proxyid) {
         throw new Error('Proxy ID (proxyid) is required for updating');
@@ -177,12 +180,14 @@ async function updateProxy(params) {
     
     return await request('proxy.update', params);
 }
+*/
 
 /**
  * Delete proxies
  * @param {Array<string>} proxyIds - Array of proxy IDs to delete
  * @returns {Promise<Object>} Deletion result with proxyids
  */
+/*
 async function deleteProxies(proxyIds) {
     if (!Array.isArray(proxyIds) || proxyIds.length === 0) {
         throw new Error('Array of proxy IDs is required for deletion');
@@ -190,6 +195,7 @@ async function deleteProxies(proxyIds) {
     
     return await request('proxy.delete', proxyIds);
 }
+*/
 
 // =============================================================================
 // PROXY HOST MANAGEMENT
@@ -225,6 +231,7 @@ async function getProxyHosts(proxyId, options = {}) {
  * @param {Array<string>} hostIds - Array of host IDs to assign
  * @returns {Promise<Object>} Assignment result
  */
+/*
 async function assignHostsToProxy(proxyId, hostIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
         throw new Error('Array of host IDs is required');
@@ -251,12 +258,14 @@ async function assignHostsToProxy(proxyId, hostIds) {
         results
     };
 }
+*/
 
 /**
  * Remove hosts from proxy (assign to server)
  * @param {Array<string>} hostIds - Array of host IDs to remove from proxy
  * @returns {Promise<Object>} Removal result
  */
+/*
 async function removeHostsFromProxy(hostIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
         throw new Error('Array of host IDs is required');
@@ -283,6 +292,7 @@ async function removeHostsFromProxy(hostIds) {
         results
     };
 }
+*/
 
 // =============================================================================
 // ANALYTICS AND STATISTICS
@@ -293,7 +303,8 @@ async function removeHostsFromProxy(hostIds) {
  * @param {Object} [options] - Statistics options
  * @returns {Promise<Object>} Proxy statistics and analytics
  */
-async function getProxyStatistics(options = {}) {
+//async function getProxyStatistics(options = {}) {
+async function getProxyStatistics() {
     const proxies = await getProxies({ 
         output: 'extend',
         selectHosts: true 
@@ -331,7 +342,7 @@ async function searchProxies(criteria = {}) {
         }
     };
     
-    let searchOptions = {};
+    const searchOptions = {};
     
     if (criteria.query) {
         searchOptions.search = { host: criteria.query };
@@ -359,6 +370,7 @@ async function searchProxies(criteria = {}) {
  * @param {Object} configUpdates - Configuration updates to apply
  * @returns {Promise<Object>} Bulk operation result
  */
+/*
 async function updateProxiesConfiguration(proxyIds, configUpdates) {
     if (!Array.isArray(proxyIds) || proxyIds.length === 0) {
         throw new Error('Array of proxy IDs is required');
@@ -385,6 +397,7 @@ async function updateProxiesConfiguration(proxyIds, configUpdates) {
         results
     };
 }
+    */
 
 // =============================================================================
 // MODULE EXPORTS
@@ -399,27 +412,27 @@ module.exports = {
     getProxiesWithHosts,
     getProxiesWithoutHosts,
     getProxiesByAvailability,
-    createProxy,
-    updateProxy,
-    deleteProxies,
+    //createProxy,
+    //updateProxy,
+    //deleteProxies,
     
     // Host Management
     getProxyHosts,
-    assignHostsToProxy,
-    removeHostsFromProxy,
+    //assignHostsToProxy,
+    //removeHostsFromProxy,
     
     // Analytics and Search
     getProxyStatistics,
     searchProxies,
     
     // Bulk Operations
-    updateProxiesConfiguration,
+    //updateProxiesConfiguration,
     
     // Legacy compatibility export
     proxiesApi: {
-        get: getProxies,
-        create: createProxy,
-        update: updateProxy,
-        delete: deleteProxies
+        get: getProxies//,
+        //create: createProxy,
+        //update: updateProxy,
+        //delete: deleteProxies
     }
 }; 

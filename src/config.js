@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Zabbix MCP Server - Configuration Module
  * 
@@ -59,10 +60,10 @@ const authMethod = determineAuthMethod();
 
 const config = {
     api: {
-        url: process.env.ZABBIX_API_URL || 'https://monitoring.sipef.com/api_jsonrpc.php',
+        url: process.env.ZABBIX_API_URL, // || 'https://monitoring.sipef.com/api_jsonrpc.php',
         
         // Authentication configuration
-        authMethod: authMethod,
+        authMethod,
         
         // API Token authentication (Zabbix 5.4+, recommended)
         apiToken: process.env.ZABBIX_API_TOKEN,

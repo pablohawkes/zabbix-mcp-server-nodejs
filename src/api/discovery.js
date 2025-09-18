@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 const { logger } = require('../utils/logger');
 const { ZabbixClient } = require('./zabbix-client');
 const config = require('../config');
@@ -49,6 +50,7 @@ async function getDiscoveryRules(options = {}) {
  * @param {Object} ruleData - Discovery rule creation parameters
  * @returns {Promise<Object>} Creation result with itemids
  */
+/*
 async function createDiscoveryRule(ruleData) {
     try {
         logger.debug(`${config.logging.prefix} Creating discovery rule: ${ruleData.name}`);
@@ -66,12 +68,14 @@ async function createDiscoveryRule(ruleData) {
         throw new Error(`Failed to create discovery rule: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing discovery rule
  * @param {Object} updateData - Discovery rule update parameters (must include itemid)
  * @returns {Promise<Object>} Update result with itemids
  */
+/*
 async function updateDiscoveryRule(updateData) {
     try {
         logger.debug(`${config.logging.prefix} Updating discovery rule: ${updateData.itemid}`);
@@ -88,12 +92,14 @@ async function updateDiscoveryRule(updateData) {
         throw new Error(`Failed to update discovery rule: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete discovery rules
  * @param {Array<string>} ruleIds - Array of discovery rule IDs to delete
  * @returns {Promise<Object>} Deletion result with itemids
  */
+/*
 async function deleteDiscoveryRules(ruleIds) {
     try {
         logger.debug(`${config.logging.prefix} Deleting ${ruleIds.length} discovery rules`);
@@ -110,6 +116,7 @@ async function deleteDiscoveryRules(ruleIds) {
         throw new Error(`Failed to delete discovery rules: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get discovery rules by host IDs
@@ -262,6 +269,7 @@ async function getDisabledDiscoveryRules(options = {}) {
  * @param {Array<string>} ruleIds - Array of discovery rule IDs to enable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function enableDiscoveryRules(ruleIds) {
     try {
         logger.debug(`${config.logging.prefix} Enabling ${ruleIds.length} discovery rules`);
@@ -283,12 +291,14 @@ async function enableDiscoveryRules(ruleIds) {
         throw new Error(`Failed to enable discovery rules: ${error.message}`);
     }
 }
+*/
 
 /**
  * Disable discovery rules
  * @param {Array<string>} ruleIds - Array of discovery rule IDs to disable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function disableDiscoveryRules(ruleIds) {
     try {
         logger.debug(`${config.logging.prefix} Disabling ${ruleIds.length} discovery rules`);
@@ -310,6 +320,7 @@ async function disableDiscoveryRules(ruleIds) {
         throw new Error(`Failed to disable discovery rules: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get discovered hosts from discovery rules
@@ -481,9 +492,9 @@ async function searchDiscoveryRules(criteria = {}) {
 module.exports = {
     // Core CRUD operations
     getDiscoveryRules,
-    createDiscoveryRule,
-    updateDiscoveryRule,
-    deleteDiscoveryRules,
+    //createDiscoveryRule,
+    //updateDiscoveryRule,
+    //deleteDiscoveryRules,
     
     // Enhanced query functions
     getDiscoveryRulesByHosts,
@@ -493,8 +504,8 @@ module.exports = {
     getDisabledDiscoveryRules,
     
     // Management functions
-    enableDiscoveryRules,
-    disableDiscoveryRules,
+    //enableDiscoveryRules,
+    //disableDiscoveryRules,
     
     // Discovery results
     getDiscoveredHosts,
@@ -507,9 +518,9 @@ module.exports = {
     // Backward compatibility
     discoveryApi: {
         get: getDiscoveryRules,
-        create: createDiscoveryRule,
-        update: updateDiscoveryRule,
-        delete: deleteDiscoveryRules,
+        //create: createDiscoveryRule,
+        //update: updateDiscoveryRule,
+        //delete: deleteDiscoveryRules,
         getDiscoveredHosts,
         getDiscoveredServices
     }

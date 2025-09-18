@@ -154,11 +154,11 @@ function registerTools(server) {
                 // Get history data
                 const apiParams = {
                     itemids: [itemid],
-                    time_from: time_from,
+                    time_from,
                     time_till: now,
                     sortfield: ['clock'],
                     sortorder: 'DESC',
-                    limit: limit,
+                    limit,
                     output: 'extend'
                 };
                 
@@ -177,7 +177,7 @@ function registerTools(server) {
                     time_range: {
                         from: new Date(time_from * 1000).toISOString(),
                         to: new Date(now * 1000).toISOString(),
-                        hours_back: hours_back
+                        hours_back
                     },
                     records_count: history.length,
                     history: history.map(record => ({

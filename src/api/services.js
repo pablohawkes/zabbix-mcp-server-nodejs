@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Enhanced Services API Module
  * 
@@ -221,14 +222,14 @@ async function getServiceSLA(serviceIds, intervals) {
     
     const slaData = await request('service.getsla', { 
         serviceids: serviceIds, 
-        intervals: intervals 
+        intervals 
     });
     
     // Enhance SLA data with additional formatting
     return slaData.map(sla => ({
         ...sla,
-        uptimePercentage: sla.uptime ? (parseFloat(sla.uptime) * 100).toFixed(2) + '%' : 'N/A',
-        downtimePercentage: sla.downtime ? (parseFloat(sla.downtime) * 100).toFixed(2) + '%' : 'N/A',
+        uptimePercentage: sla.uptime ? `${(parseFloat(sla.uptime) * 100).toFixed(2)  }%` : 'N/A',
+        downtimePercentage: sla.downtime ? `${(parseFloat(sla.downtime) * 100).toFixed(2)  }%` : 'N/A',
         slaStatus: getSLAStatus(sla.sla),
         intervalDuration: sla.to - sla.from,
         intervalDays: Math.round((sla.to - sla.from) / 86400)
@@ -253,7 +254,7 @@ async function getServiceSLASummary(serviceIds, timeRange) {
     // Calculate summary statistics
     const summary = {
         totalServices: serviceIds.length,
-        slaData: slaData,
+        slaData,
         statistics: {
             averageUptime: 0,
             averageDowntime: 0,
@@ -292,7 +293,8 @@ async function getServiceSLASummary(serviceIds, timeRange) {
  * @param {Object} [options] - Statistics options
  * @returns {Promise<Object>} Service statistics and analytics
  */
-async function getServiceStatistics(options = {}) {
+//async function getServiceStatistics(options = {}) {
+async function getServiceStatistics() {
     const services = await getServices({ 
         output: 'extend',
         selectParents: true,
@@ -336,7 +338,7 @@ async function searchServices(criteria = {}) {
         }
     };
     
-    let searchOptions = {};
+    const searchOptions = {};
     
     if (criteria.query) {
         searchOptions.search = { name: criteria.query };

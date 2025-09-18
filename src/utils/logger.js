@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Zabbix MCP Server - Logger Utility
  * 
@@ -59,31 +60,31 @@ class Logger {
 
     error(...args) {
         if (this._shouldLog('error')) {
-            process.stderr.write(this._formatMessage('error', ...args) + '\n');
+            process.stderr.write(`${this._formatMessage('error', ...args)  }\n`);
         }
     }
 
     warn(...args) {
         if (this._shouldLog('warn')) {
-            process.stderr.write(this._formatMessage('warn', ...args) + '\n');
+            process.stderr.write(`${this._formatMessage('warn', ...args)  }\n`);
         }
     }
 
     info(...args) {
         if (this._shouldLog('info')) {
-            process.stderr.write(this._formatMessage('info', ...args) + '\n');
+            process.stderr.write(`${this._formatMessage('info', ...args)  }\n`);
         }
     }
 
     debug(...args) {
         if (this._shouldLog('debug')) {
-            process.stderr.write(this._formatMessage('debug', ...args) + '\n');
+            process.stderr.write(`${this._formatMessage('debug', ...args)  }\n`);
         }
     }
 
     http(...args) {
         if (this._shouldLog('http')) {
-            process.stderr.write(this._formatMessage('http', ...args) + '\n');
+            process.stderr.write(`${this._formatMessage('http', ...args)  }\n`);
         }
     }
 

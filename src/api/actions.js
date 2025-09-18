@@ -5,6 +5,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
+// eslint-disable-next-line no-unused-vars
 const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -29,6 +30,7 @@ async function getActions(options = {}) {
  * @param {Object} params - Action creation parameters
  * @returns {Promise<Object>} Created action information
  */
+/*
 async function createAction(params) {
     // Validate required parameters
     if (!params.name || !params.eventsource) {
@@ -45,12 +47,14 @@ async function createAction(params) {
         throw new Error(`Failed to create action: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing action in Zabbix
  * @param {Object} params - Action update parameters (must include actionid)
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateAction(params) {
     if (!params || !params.actionid) {
         throw new Error("Parameter 'actionid' is required for updating an action.");
@@ -66,12 +70,14 @@ async function updateAction(params) {
         throw new Error(`Failed to update action: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete actions from Zabbix
  * @param {Array<string>} actionIds - Array of action IDs to delete
  * @returns {Promise<Object>} Deletion result
  */
+/*
 async function deleteActions(actionIds) {
     if (!Array.isArray(actionIds) || actionIds.length === 0 || !actionIds.every(id => typeof id === 'string')) {
         throw new Error("deleteActions expects a non-empty array of string action IDs.");
@@ -87,6 +93,7 @@ async function deleteActions(actionIds) {
         throw new Error(`Failed to delete actions: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get actions by name pattern
@@ -183,8 +190,8 @@ async function getActionsByEvent(eventCriteria, additionalOptions = {}) {
             wouldTrigger: true, // Simplified - would need proper condition evaluation
             eventMatch: {
                 source: eventSource,
-                hostIds: hostIds,
-                triggerIds: triggerIds
+                hostIds,
+                triggerIds
             }
         }));
         
@@ -282,6 +289,7 @@ async function getDisabledActions(additionalOptions = {}) {
  * @param {Array<string>} actionIds - Array of action IDs to enable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function enableActions(actionIds) {
     if (!Array.isArray(actionIds) || actionIds.length === 0) {
         throw new Error("enableActions expects a non-empty array of action IDs.");
@@ -303,12 +311,14 @@ async function enableActions(actionIds) {
         throw new Error(`Failed to enable actions: ${error.message}`);
     }
 }
+*/
 
 /**
  * Disable actions
  * @param {Array<string>} actionIds - Array of action IDs to disable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function disableActions(actionIds) {
     if (!Array.isArray(actionIds) || actionIds.length === 0) {
         throw new Error("disableActions expects a non-empty array of action IDs.");
@@ -330,6 +340,7 @@ async function disableActions(actionIds) {
         throw new Error(`Failed to disable actions: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get actions with escalations
@@ -371,7 +382,7 @@ async function getActionsWithEscalations(additionalOptions = {}) {
  */
 async function getActionOperations(actionIds, additionalOptions = {}) {
     if (!Array.isArray(actionIds) || actionIds.length === 0) {
-        throw new Error("getActionOperations expects a non-empty array of action IDs.");
+        throw new Error('getActionOperations expects a non-empty array of action IDs.');
     }
 
     try {
@@ -573,16 +584,16 @@ async function searchActions(criteria = {}, additionalOptions = {}) {
 
 module.exports = {
     getActions,
-    createAction,
-    updateAction,
-    deleteActions,
+    //createAction,
+    //updateAction,
+    //deleteActions,
     getActionsByName,
     getActionsByEvent,
     getActionsByEventSource,
     getEnabledActions,
     getDisabledActions,
-    enableActions,
-    disableActions,
+    //enableActions,
+    //disableActions,
     getActionsWithEscalations,
     getActionOperations,
     getActionsByOperationType,

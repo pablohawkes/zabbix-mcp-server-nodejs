@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 const { logger } = require('../utils/logger');
 const { ZabbixClient } = require('./zabbix-client');
 const config = require('../config');
@@ -42,6 +43,7 @@ async function getScripts(options = {}) {
  * @param {Object} scriptData - Script creation parameters
  * @returns {Promise<Object>} Creation result with scriptids
  */
+/*
 async function createScript(scriptData) {
     try {
         logger.debug(`${config.logging.prefix} Creating script: ${scriptData.name}`);
@@ -59,12 +61,14 @@ async function createScript(scriptData) {
         throw new Error(`Failed to create script: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing script
  * @param {Object} updateData - Script update parameters (must include scriptid)
  * @returns {Promise<Object>} Update result with scriptids
  */
+/*
 async function updateScript(updateData) {
     try {
         logger.debug(`${config.logging.prefix} Updating script: ${updateData.scriptid}`);
@@ -81,12 +85,14 @@ async function updateScript(updateData) {
         throw new Error(`Failed to update script: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete scripts
  * @param {Array<string>} scriptIds - Array of script IDs to delete
  * @returns {Promise<Object>} Deletion result with scriptids
  */
+/*
 async function deleteScripts(scriptIds) {
     try {
         logger.debug(`${config.logging.prefix} Deleting ${scriptIds.length} scripts`);
@@ -103,12 +109,14 @@ async function deleteScripts(scriptIds) {
         throw new Error(`Failed to delete scripts: ${error.message}`);
     }
 }
+*/
 
 /**
  * Execute a script on a host
  * @param {Object} executionData - Script execution parameters
  * @returns {Promise<Object>} Execution result
  */
+/*
 async function executeScript(executionData) {
     try {
         logger.debug(`${config.logging.prefix} Executing script: ${executionData.scriptid} on host: ${executionData.hostid}`);
@@ -126,6 +134,7 @@ async function executeScript(executionData) {
         throw new Error(`Failed to execute script: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get scripts by name pattern
@@ -201,7 +210,7 @@ async function getScriptsByScope(scope, options = {}) {
         }
         
         const params = {
-            filter: { scope: scope },
+            filter: { scope },
             output: 'extend',
             selectHosts: ['hostid', 'name'],
             selectHostGroups: ['groupid', 'name'],
@@ -328,6 +337,7 @@ async function getWebhookScripts(options = {}) {
  * @param {Object} options - Additional execution options
  * @returns {Promise<Array>} Array of execution results
  */
+/*
 async function executeScriptOnHosts(scriptId, hostIds, options = {}) {
     try {
         logger.debug(`${config.logging.prefix} Executing script ${scriptId} on ${hostIds.length} hosts`);
@@ -367,6 +377,7 @@ async function executeScriptOnHosts(scriptId, hostIds, options = {}) {
         throw new Error(`Failed to execute script on hosts: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get script execution history from events
@@ -526,10 +537,10 @@ async function searchScripts(criteria = {}) {
 module.exports = {
     // Core CRUD operations
     getScripts,
-    createScript,
-    updateScript,
-    deleteScripts,
-    executeScript,
+    //createScript,
+    //updateScript,
+    //deleteScripts,
+    //executeScript,
     
     // Enhanced query functions
     getScriptsByName,
@@ -541,7 +552,7 @@ module.exports = {
     getWebhookScripts,
     
     // Execution functions
-    executeScriptOnHosts,
+    //executeScriptOnHosts,
     getScriptExecutionHistory,
     
     // Analytics and search
@@ -550,10 +561,10 @@ module.exports = {
     
     // Backward compatibility
     scriptsApi: {
-        get: getScripts,
-        create: createScript,
-        update: updateScript,
-        delete: deleteScripts,
-        execute: executeScript
+        get: getScripts//,
+        //create: createScript,
+        //update: updateScript,
+        //delete: deleteScripts,
+        //execute: executeScript
     }
 }; 

@@ -1,4 +1,5 @@
-﻿/**
+﻿/* eslint-disable security/detect-object-injection */
+/**
  * Intelligence API Module - LLM-Optimized Convenience Functions
  * 
  * This module provides high-level intelligence functions that aggregate and process
@@ -6,7 +7,8 @@
  * structured, actionable data optimized for conversational AI interactions.
  */
 
-const { request } = require('./zabbix-client');
+// eslint-disable-next-line no-unused-vars
+const { getClient, request } = require('./zabbix-client');
 const { logger, config } = require('../utils/logger');
 
 /**
@@ -15,11 +17,13 @@ const { logger, config } = require('../utils/logger');
  * @param {Object} [options] - Optional filtering parameters
  * @returns {Promise<Object>} Infrastructure health summary
  */
-async function getInfrastructureHealth(options = {}) {
+//async function getInfrastructureHealth(options = {}) {
+async function getInfrastructureHealth() {
     try {
         logger.debug(`${config.logging.prefix} Getting infrastructure health summary`);
         
         // Get hosts, problems, and basic metrics in parallel
+        // eslint-disable-next-line no-unused-vars
         const [hosts, problems, triggers] = await Promise.all([
             request('host.get', { 
                 output: ['hostid', 'name', 'status', 'available'],
@@ -61,7 +65,7 @@ async function getInfrastructureHealth(options = {}) {
                     name: problem.name,
                     severity: severity === 5 ? 'Critical' : 'High',
                     host: problem.hosts?.[0]?.name || 'Unknown',
-                    duration: Math.floor((Date.now() / 1000 - parseInt(problem.clock)) / 60) + ' minutes'
+                    duration: `${Math.floor((Date.now() / 1000 - parseInt(problem.clock)) / 60)  } minutes`
                 });
             }
         });
@@ -90,7 +94,7 @@ async function getInfrastructureHealth(options = {}) {
             summary += `${hostStats.unavailable} host unavailable. `;
         }
         if (severityCounts.critical === 0 && severityCounts.high === 0) {
-            summary += ` No critical issues detected.`;
+            summary += ' No critical issues detected.';
         }
 
         return {
@@ -177,7 +181,8 @@ async function getCriticalIssues(options = {}) {
  * @param {Object} [options] - Optional filtering parameters
  * @returns {Promise<Object>} System overview
  */
-async function getSystemOverview(options = {}) {
+//async function getSystemOverview(options = {}) {
+async function getSystemOverview() {
     try {
         logger.debug(`${config.logging.prefix} Getting system overview`);
         
@@ -241,7 +246,8 @@ async function getSystemOverview(options = {}) {
  * @param {Object} [options] - Optional filtering parameters
  * @returns {Promise<Object>} 24-hour summary
  */
-async function getLast24HoursSummary(options = {}) {
+//async function getLast24HoursSummary(options = {}) {
+async function getLast24HoursSummary() {
     try {
         logger.debug(`${config.logging.prefix} Getting 24h summary`);
         
@@ -264,7 +270,7 @@ async function getLast24HoursSummary(options = {}) {
                 name: p.name,
                 severity: ['Not classified', 'Information', 'Warning', 'Average', 'High', 'Disaster'][p.severity],
                 host: p.hosts?.[0]?.name || 'Unknown',
-                time: Math.floor((Date.now() / 1000 - parseInt(p.clock)) / 60) + ' minutes ago'
+                time: `${Math.floor((Date.now() / 1000 - parseInt(p.clock)) / 60)  } minutes ago`
             })),
             timestamp: new Date().toISOString()
         };
@@ -317,7 +323,7 @@ async function getActionableItems(options = {}) {
                 title: problem.name,
                 host: problem.hosts?.[0]?.name || 'Unknown',
                 action: 'Acknowledge and investigate',
-                duration: Math.floor((Date.now() / 1000 - parseInt(problem.clock)) / 60) + ' minutes'
+                duration: `${Math.floor((Date.now() / 1000 - parseInt(problem.clock)) / 60)  } minutes`
             });
         });
 
@@ -400,7 +406,7 @@ async function getPerformanceAlerts(options = {}) {
                 severity: ['Not classified', 'Information', 'Warning', 'Average', 'High', 'Disaster'][priority],
                 metric: item?.name || 'Unknown metric',
                 key: item?.key_ || '',
-                duration: Math.floor((Date.now() / 1000 - parseInt(trigger.lastchange)) / 60) + ' minutes'
+                duration: `${Math.floor((Date.now() / 1000 - parseInt(trigger.lastchange)) / 60)  } minutes`
             };
         });
 

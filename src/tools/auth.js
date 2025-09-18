@@ -1,5 +1,5 @@
 const api = require('../api');
-//const config = require('../config');
+const config = require('../config');
 const { logger } = require('../utils/logger');
 //const { z } = require('zod');
 
@@ -101,13 +101,13 @@ function checkConfiguration() {
     const hasPassword = !!process.env.ZABBIX_PASSWORD;
     
     const diagnosis = [
-        `Environment Variables Status:`,
+        'Environment Variables Status:',
         `- ZABBIX_API_URL: ${hasApiUrl ? '✓ Set' : '✗ Missing'} ${hasApiUrl ? `(${process.env.ZABBIX_API_URL})` : ''}`,
         `- ZABBIX_API_TOKEN: ${hasApiToken ? '✓ Set' : '✗ Missing'} ${hasApiToken ? '(***hidden***)' : ''}`,
         `- ZABBIX_USERNAME: ${hasUsername ? '✓ Set' : '✗ Missing'} ${hasUsername ? `(${process.env.ZABBIX_USERNAME})` : ''}`,
         `- ZABBIX_PASSWORD: ${hasPassword ? '✓ Set' : '✗ Missing'} ${hasPassword ? '(***hidden***)' : ''}`,
-        ``,
-        `Configuration Status:`,
+        '',
+        'Configuration Status:',
         `- API URL: ${config.api.url}`,
         `- Auth Method: ${config.api.authMethod}`,
         `- Timeout: ${config.api.timeout}ms`,
@@ -115,20 +115,20 @@ function checkConfiguration() {
     ].join('\n');
 
     const requirements = [
-        `Required Environment Variables:`,
-        ``,
-        `Option 1 - API Token Authentication (Recommended for Zabbix 5.4+):`,
-        `  ZABBIX_API_URL=https://your-zabbix-server/api_jsonrpc.php`,
-        `  ZABBIX_API_TOKEN=your-api-token`,
-        ``,
-        `Option 2 - Username/Password Authentication:`,
-        `  ZABBIX_API_URL=https://your-zabbix-server/api_jsonrpc.php`,
-        `  ZABBIX_USERNAME=your-username`,
-        `  ZABBIX_PASSWORD=your-password`,
-        ``,
-        `Optional:`,
-        `  ZABBIX_IGNORE_SELFSIGNED_CERT=true  # For self-signed certificates`,
-        `  ZABBIX_REQUEST_TIMEOUT=120000       # Request timeout in milliseconds`
+        'Required Environment Variables:',
+        '',
+        'Option 1 - API Token Authentication (Recommended for Zabbix 5.4+):',
+        '  ZABBIX_API_URL=https://your-zabbix-server/api_jsonrpc.php',
+        '  ZABBIX_API_TOKEN=your-api-token',
+        '',
+        'Option 2 - Username/Password Authentication:',
+        '  ZABBIX_API_URL=https://your-zabbix-server/api_jsonrpc.php',
+        '  ZABBIX_USERNAME=your-username',
+        '  ZABBIX_PASSWORD=your-password',
+        '',
+        'Optional:',
+        '  ZABBIX_IGNORE_SELFSIGNED_CERT=true  # For self-signed certificates',
+        '  ZABBIX_REQUEST_TIMEOUT=120000       # Request timeout in milliseconds'
     ].join('\n');
 
     if (!hasApiUrl) {
@@ -178,7 +178,7 @@ async function checkApiVersion() {
         
         return {
             success: true,
-            version: version,
+            version,
             message: `Connected to Zabbix API version: ${version}`
         };
     } catch (error) {

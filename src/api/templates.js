@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Templates API Module - Refactored to use zabbix-utils
  * 
@@ -5,6 +6,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
+// eslint-disable-next-line no-unused-vars
 const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -29,6 +31,7 @@ async function getTemplates(options = {}) {
  * @param {Object} params - Template creation parameters
  * @returns {Promise<Object>} Created template information
  */
+/*
 async function createTemplate(params) {
     // Validate required parameters
     if (!params.host || !params.name || !params.groups) {
@@ -45,12 +48,14 @@ async function createTemplate(params) {
         throw new Error(`Failed to create template: ${error.message}`);
     }
 }
+*/ 
 
 /**
  * Update an existing template in Zabbix
  * @param {Object} params - Template update parameters (must include templateid)
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateTemplate(params) {
     if (!params || !params.templateid) {
         throw new Error("Parameter 'templateid' is required for updating a template.");
@@ -66,15 +71,17 @@ async function updateTemplate(params) {
         throw new Error(`Failed to update template: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete templates from Zabbix
  * @param {Array<string>} templateIds - Array of template IDs to delete
  * @returns {Promise<Object>} Deletion result
  */
+/*
 async function deleteTemplates(templateIds) {
     if (!Array.isArray(templateIds) || templateIds.length === 0 || !templateIds.every(id => typeof id === 'string')) {
-        throw new Error("deleteTemplates expects a non-empty array of string template IDs.");
+        throw new Error('deleteTemplates expects a non-empty array of string template IDs.');
     }
 
     try {
@@ -87,6 +94,7 @@ async function deleteTemplates(templateIds) {
         throw new Error(`Failed to delete templates: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get templates by group IDs
@@ -96,7 +104,7 @@ async function deleteTemplates(templateIds) {
  */
 async function getTemplatesByGroups(groupIds, additionalOptions = {}) {
     if (!Array.isArray(groupIds) || groupIds.length === 0) {
-        throw new Error("getTemplatesByGroups expects a non-empty array of group IDs.");
+        throw new Error('getTemplatesByGroups expects a non-empty array of group IDs.');
     }
 
     try {
@@ -152,7 +160,7 @@ async function getTemplatesByName(templateNames, additionalOptions = {}) {
  */
 async function getTemplateItems(templateIds, additionalOptions = {}) {
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
-        throw new Error("getTemplateItems expects a non-empty array of template IDs.");
+        throw new Error('getTemplateItems expects a non-empty array of template IDs.');
     }
 
     try {
@@ -180,7 +188,7 @@ async function getTemplateItems(templateIds, additionalOptions = {}) {
  */
 async function getTemplateTriggers(templateIds, additionalOptions = {}) {
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
-        throw new Error("getTemplateTriggers expects a non-empty array of template IDs.");
+        throw new Error('getTemplateTriggers expects a non-empty array of template IDs.');
     }
 
     try {
@@ -208,7 +216,7 @@ async function getTemplateTriggers(templateIds, additionalOptions = {}) {
  */
 async function getTemplateHosts(templateIds, additionalOptions = {}) {
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
-        throw new Error("getTemplateHosts expects a non-empty array of template IDs.");
+        throw new Error('getTemplateHosts expects a non-empty array of template IDs.');
     }
 
     try {
@@ -234,12 +242,13 @@ async function getTemplateHosts(templateIds, additionalOptions = {}) {
  * @param {Array<string>} templateIds - Array of template IDs to link
  * @returns {Promise<Object>} Link result
  */
+/*
 async function linkTemplatesToHosts(hostIds, templateIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
-        throw new Error("linkTemplatesToHosts expects a non-empty array of host IDs.");
+        throw new Error('linkTemplatesToHosts expects a non-empty array of host IDs.');
     }
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
-        throw new Error("linkTemplatesToHosts expects a non-empty array of template IDs.");
+        throw new Error('linkTemplatesToHosts expects a non-empty array of template IDs.');
     }
 
     try {
@@ -262,6 +271,7 @@ async function linkTemplatesToHosts(hostIds, templateIds) {
         throw new Error(`Failed to link templates to hosts: ${error.message}`);
     }
 }
+    */
 
 /**
  * Unlink templates from hosts
@@ -269,12 +279,13 @@ async function linkTemplatesToHosts(hostIds, templateIds) {
  * @param {Array<string>} templateIds - Array of template IDs to unlink
  * @returns {Promise<Object>} Unlink result
  */
+/*
 async function unlinkTemplatesFromHosts(hostIds, templateIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
-        throw new Error("unlinkTemplatesFromHosts expects a non-empty array of host IDs.");
+        throw new Error('unlinkTemplatesFromHosts expects a non-empty array of host IDs.');
     }
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
-        throw new Error("unlinkTemplatesFromHosts expects a non-empty array of template IDs.");
+        throw new Error('unlinkTemplatesFromHosts expects a non-empty array of template IDs.');
     }
 
     try {
@@ -297,6 +308,7 @@ async function unlinkTemplatesFromHosts(hostIds, templateIds) {
         throw new Error(`Failed to unlink templates from hosts: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get template macros
@@ -306,7 +318,7 @@ async function unlinkTemplatesFromHosts(hostIds, templateIds) {
  */
 async function getTemplateMacros(templateIds, additionalOptions = {}) {
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
-        throw new Error("getTemplateMacros expects a non-empty array of template IDs.");
+        throw new Error('getTemplateMacros expects a non-empty array of template IDs.');
     }
 
     try {
@@ -333,7 +345,7 @@ async function getTemplateMacros(templateIds, additionalOptions = {}) {
  */
 async function exportTemplates(templateIds, options = {}) {
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
-        throw new Error("exportTemplates expects a non-empty array of template IDs.");
+        throw new Error('exportTemplates expects a non-empty array of template IDs.');
     }
 
     try {
@@ -364,7 +376,7 @@ async function exportTemplates(templateIds, options = {}) {
  */
 async function importTemplates(source, options = {}) {
     if (!source || typeof source !== 'string') {
-        throw new Error("importTemplates expects a valid source configuration string.");
+        throw new Error('importTemplates expects a valid source configuration string.');
     }
 
     try {
@@ -372,7 +384,7 @@ async function importTemplates(source, options = {}) {
         
         const importOptions = {
             format: 'xml', // Default to XML format
-            source: source,
+            source,
             rules: {
                 templates: {
                     createMissing: true,
@@ -462,16 +474,16 @@ async function getTemplateStatistics(templateIds = null) {
 
 module.exports = {
     getTemplates,
-    createTemplate,
-    updateTemplate,
-    deleteTemplates,
+    //createTemplate,
+    //updateTemplate,
+    //deleteTemplates,
     getTemplatesByGroups,
     getTemplatesByName,
     getTemplateItems,
     getTemplateTriggers,
     getTemplateHosts,
-    linkTemplatesToHosts,
-    unlinkTemplatesFromHosts,
+    //linkTemplatesToHosts,
+    //unlinkTemplatesFromHosts,
     getTemplateMacros,
     exportTemplates,
     importTemplates,

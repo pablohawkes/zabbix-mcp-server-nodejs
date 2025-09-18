@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Enhanced Dashboards API Module
  * 
@@ -17,7 +18,8 @@
  * @since 2025-06-24
  */
 
-const { request } = require('./zabbix-client');
+// eslint-disable-next-line no-unused-vars
+const { getClient, request } = require('./zabbix-client');
 
 // =============================================================================
 // DASHBOARD MANAGEMENT
@@ -171,6 +173,7 @@ async function getDashboardsWithWidgetTypes(widgetTypes = [], options = {}) {
  * @param {Object} params - Dashboard creation parameters
  * @returns {Promise<Object>} Creation result with dashboardids
  */
+/*
 async function createDashboard(params) {
     if (!params.name) {
         throw new Error('Dashboard name is required');
@@ -189,12 +192,14 @@ async function createDashboard(params) {
     
     return await request('dashboard.create', defaultParams);
 }
+*/
 
 /**
  * Update an existing dashboard
  * @param {Object} params - Dashboard update parameters (must include dashboardid)
  * @returns {Promise<Object>} Update result with dashboardids
  */
+/*
 async function updateDashboard(params) {
     if (!params.dashboardid) {
         throw new Error('Dashboard ID (dashboardid) is required for updating');
@@ -202,12 +207,14 @@ async function updateDashboard(params) {
     
     return await request('dashboard.update', params);
 }
+*/
 
 /**
  * Delete dashboards
  * @param {Array<string>} dashboardIds - Array of dashboard IDs to delete
  * @returns {Promise<Object>} Deletion result with dashboardids
  */
+/*
 async function deleteDashboards(dashboardIds) {
     if (!Array.isArray(dashboardIds) || dashboardIds.length === 0) {
         throw new Error('Array of dashboard IDs is required for deletion');
@@ -215,6 +222,7 @@ async function deleteDashboards(dashboardIds) {
     
     return await request('dashboard.delete', dashboardIds);
 }
+*/
 
 /**
  * Clone/copy dashboards
@@ -222,6 +230,7 @@ async function deleteDashboards(dashboardIds) {
  * @param {string} [namePrefix] - Prefix for cloned dashboard names
  * @returns {Promise<Array>} Array of cloned dashboards
  */
+/*
 async function cloneDashboards(dashboardIds, namePrefix = 'Copy of ') {
     const sourceDashboards = await getDashboards({
         dashboardids: dashboardIds,
@@ -245,6 +254,7 @@ async function cloneDashboards(dashboardIds, namePrefix = 'Copy of ') {
     
     return clonedDashboards;
 }
+    */
 
 // =============================================================================
 // WIDGET MANAGEMENT
@@ -302,6 +312,7 @@ async function getDashboardWidgets(dashboardId, pageIndex = null) {
  * @param {Object} widgetConfig - Widget configuration
  * @returns {Promise<Object>} Update result
  */
+/*
 async function addWidgetToDashboard(dashboardId, pageIndex, widgetConfig) {
     if (!widgetConfig.type) {
         throw new Error('Widget type is required');
@@ -344,6 +355,7 @@ async function addWidgetToDashboard(dashboardId, pageIndex, widgetConfig) {
         pages: updatedPages
     });
 }
+*/
 
 // =============================================================================
 // ANALYTICS AND STATISTICS
@@ -354,7 +366,8 @@ async function addWidgetToDashboard(dashboardId, pageIndex, widgetConfig) {
  * @param {Object} [options] - Statistics options
  * @returns {Promise<Object>} Dashboard statistics and analytics
  */
-async function getDashboardStatistics(options = {}) {
+//async function getDashboardStatistics(options = {}) {
+async function getDashboardStatistics() {
     const dashboards = await getDashboards({ 
         output: 'extend',
         selectPages: true 
@@ -395,7 +408,7 @@ async function searchDashboards(criteria = {}) {
         }
     };
     
-    let searchOptions = {};
+    const searchOptions = {};
     
     if (criteria.query) {
         searchOptions.search = { name: criteria.query };
@@ -423,6 +436,7 @@ async function searchDashboards(criteria = {}) {
  * @param {boolean} isPrivate - True for private, false for public
  * @returns {Promise<Object>} Bulk operation result
  */
+/*
 async function setDashboardsPrivacy(dashboardIds, isPrivate) {
     if (!Array.isArray(dashboardIds) || dashboardIds.length === 0) {
         throw new Error('Array of dashboard IDs is required');
@@ -449,6 +463,7 @@ async function setDashboardsPrivacy(dashboardIds, isPrivate) {
         results
     };
 }
+*/
 
 /**
  * Update dashboard permissions for multiple dashboards
@@ -457,6 +472,7 @@ async function setDashboardsPrivacy(dashboardIds, isPrivate) {
  * @param {Array} userGroups - User group permissions array
  * @returns {Promise<Object>} Bulk permission update result
  */
+/*
 async function updateDashboardsPermissions(dashboardIds, users = [], userGroups = []) {
     if (!Array.isArray(dashboardIds) || dashboardIds.length === 0) {
         throw new Error('Array of dashboard IDs is required');
@@ -490,6 +506,7 @@ async function updateDashboardsPermissions(dashboardIds, users = [], userGroups 
         results
     };
 }
+*/
 
 // =============================================================================
 // UTILITY FUNCTIONS
@@ -542,28 +559,28 @@ module.exports = {
     getPrivateDashboards,
     getTemplateDashboards,
     getDashboardsWithWidgetTypes,
-    createDashboard,
-    updateDashboard,
-    deleteDashboards,
-    cloneDashboards,
+    //createDashboard,
+    //updateDashboard,
+    //deleteDashboards,
+    //cloneDashboards,
     
     // Widget Management
     getDashboardWidgets,
-    addWidgetToDashboard,
+    //addWidgetToDashboard,
     
     // Analytics and Search
     getDashboardStatistics,
     searchDashboards,
     
     // Bulk Operations
-    setDashboardsPrivacy,
-    updateDashboardsPermissions,
+    //setDashboardsPrivacy,
+    //updateDashboardsPermissions,
     
     // Legacy compatibility export
     dashboardsApi: {
-        get: getDashboards,
-        create: createDashboard,
-        update: updateDashboard,
-        delete: deleteDashboards
+        get: getDashboards//,
+        //create: createDashboard,
+        //update: updateDashboard,
+        //delete: deleteDashboards
     }
 }; 

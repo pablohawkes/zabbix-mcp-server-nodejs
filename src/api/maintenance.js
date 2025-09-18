@@ -5,6 +5,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
+// eslint-disable-next-line no-unused-vars
 const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -29,6 +30,7 @@ async function getMaintenanceWindows(options = {}) {
  * @param {Object} params - Maintenance window creation parameters
  * @returns {Promise<Object>} Created maintenance window information
  */
+/*
 async function createMaintenanceWindow(params) {
     // Validate required parameters
     if (!params.name || !params.active_since || !params.active_till) {
@@ -45,12 +47,14 @@ async function createMaintenanceWindow(params) {
         throw new Error(`Failed to create maintenance window: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing maintenance window in Zabbix
  * @param {Object} params - Maintenance window update parameters (must include maintenanceid)
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateMaintenanceWindow(params) {
     if (!params || !params.maintenanceid) {
         throw new Error("Parameter 'maintenanceid' is required for updating a maintenance window.");
@@ -66,15 +70,17 @@ async function updateMaintenanceWindow(params) {
         throw new Error(`Failed to update maintenance window: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete maintenance windows from Zabbix
  * @param {Array<string>} maintenanceIds - Array of maintenance window IDs to delete
  * @returns {Promise<Object>} Deletion result
  */
+/*
 async function deleteMaintenanceWindows(maintenanceIds) {
     if (!Array.isArray(maintenanceIds) || maintenanceIds.length === 0 || !maintenanceIds.every(id => typeof id === 'string')) {
-        throw new Error("deleteMaintenanceWindows expects a non-empty array of string maintenance IDs.");
+        throw new Error('deleteMaintenanceWindows expects a non-empty array of string maintenance IDs.');
     }
 
     try {
@@ -87,6 +93,7 @@ async function deleteMaintenanceWindows(maintenanceIds) {
         throw new Error(`Failed to delete maintenance windows: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get active maintenance windows
@@ -157,7 +164,7 @@ async function getMaintenanceWindowsByName(namePatterns, additionalOptions = {})
  */
 async function getMaintenanceWindowsByHosts(hostIds, additionalOptions = {}) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
-        throw new Error("getMaintenanceWindowsByHosts expects a non-empty array of host IDs.");
+        throw new Error('getMaintenanceWindowsByHosts expects a non-empty array of host IDs.');
     }
 
     try {
@@ -187,7 +194,7 @@ async function getMaintenanceWindowsByHosts(hostIds, additionalOptions = {}) {
  */
 async function getMaintenanceWindowsByGroups(groupIds, additionalOptions = {}) {
     if (!Array.isArray(groupIds) || groupIds.length === 0) {
-        throw new Error("getMaintenanceWindowsByGroups expects a non-empty array of group IDs.");
+        throw new Error('getMaintenanceWindowsByGroups expects a non-empty array of group IDs.');
     }
 
     try {
@@ -275,6 +282,7 @@ async function getExpiredMaintenanceWindows(daysBack = 7, additionalOptions = {}
  * @param {Object} params - Maintenance window parameters with scheduling
  * @returns {Promise<Object>} Created maintenance window information
  */
+/*
 async function createScheduledMaintenance(params) {
     // Validate required parameters
     if (!params.name || !params.hosts && !params.hostgroups) {
@@ -300,6 +308,7 @@ async function createScheduledMaintenance(params) {
         throw new Error(`Failed to create scheduled maintenance: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get maintenance window statistics
@@ -445,16 +454,16 @@ async function searchMaintenanceWindows(criteria = {}, additionalOptions = {}) {
 
 module.exports = {
     getMaintenanceWindows,
-    createMaintenanceWindow,
-    updateMaintenanceWindow,
-    deleteMaintenanceWindows,
+    //createMaintenanceWindow,
+    //updateMaintenanceWindow,
+    //deleteMaintenanceWindows,
     getActiveMaintenanceWindows,
     getMaintenanceWindowsByName,
     getMaintenanceWindowsByHosts,
     getMaintenanceWindowsByGroups,
     getUpcomingMaintenanceWindows,
     getExpiredMaintenanceWindows,
-    createScheduledMaintenance,
+    //createScheduledMaintenance,
     getMaintenanceStatistics,
     searchMaintenanceWindows
 }; 

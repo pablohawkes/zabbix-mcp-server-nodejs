@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 /**
  * Enhanced Maps API Module
  * 
@@ -193,6 +194,7 @@ async function getMapsWithElements(elementTypes = [], options = {}) {
  * @param {Array} [params.userGroups] - User group permissions
  * @returns {Promise<Object>} Creation result with sysmapids
  */
+/*
 async function createMap(params) {
     // Validate required parameters
     if (!params.name) {
@@ -228,12 +230,14 @@ async function createMap(params) {
     
     return await request('map.create', defaultParams);
 }
+*/
 
 /**
  * Update an existing network map
  * @param {Object} params - Map update parameters (must include sysmapid)
  * @returns {Promise<Object>} Update result with sysmapids
  */
+/*
 async function updateMap(params) {
     if (!params.sysmapid) {
         throw new Error('Map ID (sysmapid) is required for updating');
@@ -241,12 +245,14 @@ async function updateMap(params) {
     
     return await request('map.update', params);
 }
+*/
 
 /**
  * Delete network maps
  * @param {Array<string>} mapIds - Array of map IDs to delete
  * @returns {Promise<Object>} Deletion result with sysmapids
  */
+/*
 async function deleteMaps(mapIds) {
     if (!Array.isArray(mapIds) || mapIds.length === 0) {
         throw new Error('Array of map IDs is required for deletion');
@@ -254,6 +260,7 @@ async function deleteMaps(mapIds) {
     
     return await request('map.delete', mapIds);
 }
+*/
 
 /**
  * Copy/clone network maps
@@ -261,6 +268,7 @@ async function deleteMaps(mapIds) {
  * @param {string} [namePrefix] - Prefix for cloned map names
  * @returns {Promise<Array>} Array of cloned maps
  */
+/*
 async function cloneMaps(mapIds, namePrefix = 'Copy of ') {
     const sourceMaps = await getMaps({
         sysmapids: mapIds,
@@ -285,6 +293,8 @@ async function cloneMaps(mapIds, namePrefix = 'Copy of ') {
     
     return clonedMaps;
 }
+*/
+    
 
 // =============================================================================
 // VALUE MAPS MANAGEMENT
@@ -352,6 +362,7 @@ async function getValueMapsByHosts(hostIds, options = {}) {
  * @param {Array} params.mappings - Value mappings array
  * @returns {Promise<Object>} Creation result with valuemapids
  */
+/*
 async function createValueMap(params) {
     if (!params.name) {
         throw new Error('Value map name is required');
@@ -363,12 +374,14 @@ async function createValueMap(params) {
     
     return await request('valuemap.create', params);
 }
+*/
 
 /**
  * Update an existing value map
  * @param {Object} params - Value map update parameters (must include valuemapid)
  * @returns {Promise<Object>} Update result with valuemapids
  */
+/*
 async function updateValueMap(params) {
     if (!params.valuemapid) {
         throw new Error('Value map ID (valuemapid) is required for updating');
@@ -376,12 +389,14 @@ async function updateValueMap(params) {
     
     return await request('valuemap.update', params);
 }
+*/
 
 /**
  * Delete value maps
  * @param {Array<string>} valueMapIds - Array of value map IDs to delete
  * @returns {Promise<Object>} Deletion result with valuemapids
  */
+/*
 async function deleteValueMaps(valueMapIds) {
     if (!Array.isArray(valueMapIds) || valueMapIds.length === 0) {
         throw new Error('Array of value map IDs is required for deletion');
@@ -389,6 +404,7 @@ async function deleteValueMaps(valueMapIds) {
     
     return await request('valuemap.delete', valueMapIds);
 }
+*/
 
 // =============================================================================
 // ICON MAPS MANAGEMENT
@@ -445,6 +461,7 @@ async function getIconMapsByName(namePattern, options = {}) {
  * @param {Array} [params.mappings] - Icon mappings array
  * @returns {Promise<Object>} Creation result with iconmapids
  */
+/*
 async function createIconMap(params) {
     if (!params.name) {
         throw new Error('Icon map name is required');
@@ -456,12 +473,14 @@ async function createIconMap(params) {
     
     return await request('iconmap.create', params);
 }
+*/
 
 /**
  * Update an existing icon map
  * @param {Object} params - Icon map update parameters (must include iconmapid)
  * @returns {Promise<Object>} Update result with iconmapids
  */
+/*
 async function updateIconMap(params) {
     if (!params.iconmapid) {
         throw new Error('Icon map ID (iconmapid) is required for updating');
@@ -469,12 +488,14 @@ async function updateIconMap(params) {
     
     return await request('iconmap.update', params);
 }
+*/
 
 /**
  * Delete icon maps
  * @param {Array<string>} iconMapIds - Array of icon map IDs to delete
  * @returns {Promise<Object>} Deletion result with iconmapids
  */
+/*
 async function deleteIconMaps(iconMapIds) {
     if (!Array.isArray(iconMapIds) || iconMapIds.length === 0) {
         throw new Error('Array of icon map IDs is required for deletion');
@@ -482,6 +503,7 @@ async function deleteIconMaps(iconMapIds) {
     
     return await request('iconmap.delete', iconMapIds);
 }
+*/
 
 // =============================================================================
 // MAP ANALYTICS AND STATISTICS
@@ -492,7 +514,8 @@ async function deleteIconMaps(iconMapIds) {
  * @param {Object} [options] - Statistics options
  * @returns {Promise<Object>} Maps statistics and analytics
  */
-async function getMapStatistics(options = {}) {
+//async function getMapStatistics(options = {}) {
+async function getMapStatistics() {
     const maps = await getMaps({ 
         output: 'extend',
         selectElements: true,
@@ -564,7 +587,7 @@ async function searchMaps(criteria = {}) {
     
     // Search network maps
     if (searchTypes.includes('network')) {
-        let networkOptions = {};
+        const networkOptions = {};
         
         if (criteria.query) {
             networkOptions.search = { name: criteria.query };
@@ -581,7 +604,7 @@ async function searchMaps(criteria = {}) {
     
     // Search value maps
     if (searchTypes.includes('value')) {
-        let valueOptions = {};
+        const valueOptions = {};
         
         if (criteria.query) {
             valueOptions.search = { name: criteria.query };
@@ -592,7 +615,7 @@ async function searchMaps(criteria = {}) {
     
     // Search icon maps
     if (searchTypes.includes('icon')) {
-        let iconOptions = {};
+        const iconOptions = {};
         
         if (criteria.query) {
             iconOptions.search = { name: criteria.query };
@@ -619,6 +642,7 @@ async function searchMaps(criteria = {}) {
  * @param {boolean} enabled - True to enable, false to disable
  * @returns {Promise<Object>} Bulk operation result
  */
+/*
 async function setMapsEnabled(mapIds, enabled) {
     if (!Array.isArray(mapIds) || mapIds.length === 0) {
         throw new Error('Array of map IDs is required');
@@ -646,6 +670,7 @@ async function setMapsEnabled(mapIds, enabled) {
         results
     };
 }
+*/
 
 /**
  * Update map permissions for multiple maps
@@ -654,6 +679,7 @@ async function setMapsEnabled(mapIds, enabled) {
  * @param {Array} userGroups - User group permissions array
  * @returns {Promise<Object>} Bulk permission update result
  */
+/*
 async function updateMapsPermissions(mapIds, users = [], userGroups = []) {
     if (!Array.isArray(mapIds) || mapIds.length === 0) {
         throw new Error('Array of map IDs is required');
@@ -687,6 +713,7 @@ async function updateMapsPermissions(mapIds, users = [], userGroups = []) {
         results
     };
 }
+*/
 
 // =============================================================================
 // UTILITY FUNCTIONS
@@ -793,47 +820,47 @@ module.exports = {
     getPublicMaps,
     getPrivateMaps,
     getMapsWithElements,
-    createMap,
-    updateMap,
-    deleteMaps,
-    cloneMaps,
+    //createMap,
+    //updateMap,
+    //deleteMaps,
+    //cloneMaps,
     
     // Value Maps
     getValueMaps,
     getValueMapsByName,
     getValueMapsByHosts,
-    createValueMap,
-    updateValueMap,
-    deleteValueMaps,
+    //createValueMap,
+    //updateValueMap,
+    //deleteValueMaps,
     
     // Icon Maps
     getIconMaps,
     getIconMapsByName,
-    createIconMap,
-    updateIconMap,
-    deleteIconMaps,
+    //createIconMap,
+    //updateIconMap,
+    //deleteIconMaps,
     
     // Analytics and Search
     getMapStatistics,
     searchMaps,
     
     // Bulk Operations
-    setMapsEnabled,
-    updateMapsPermissions,
+    //setMapsEnabled,
+    //updateMapsPermissions,
     
     // Legacy compatibility export
     mapsApi: {
         getMaps,
-        createMap,
-        updateMap,
-        deleteMaps,
+        //createMap,
+        //updateMap,
+        //deleteMaps,
         getValueMaps,
-        createValueMap,
-        updateValueMap,
-        deleteValueMaps,
-        getIconMaps,
-        createIconMap,
-        updateIconMap,
-        deleteIconMaps
+        //createValueMap,
+        //updateValueMap,
+        //deleteValueMaps,
+        getIconMaps//,
+        //createIconMap,
+        //updateIconMap,
+        //deleteIconMaps
     }
 }; 

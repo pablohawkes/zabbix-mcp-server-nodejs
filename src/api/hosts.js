@@ -5,6 +5,7 @@
  * for improved type safety, automatic authentication, and better error handling.
  */
 
+// eslint-disable-next-line no-unused-vars
 const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 const config = require('../config');
@@ -32,6 +33,7 @@ async function getHosts(options = {
  * @param {Object} params - Host creation parameters
  * @returns {Promise<Object>} Created host information
  */
+/*
 async function createHost(params) {
     // Validate required parameters
     if (!params.host || !params.groups || !params.interfaces) {
@@ -48,12 +50,14 @@ async function createHost(params) {
         throw new Error(`Failed to create host: ${error.message}`);
     }
 }
+*/
 
 /**
  * Update an existing host in Zabbix
  * @param {Object} params - Host update parameters (must include hostid)
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateHost(params) {
     if (!params || !params.hostid) {
         throw new Error("Parameter 'hostid' is required for updating a host.");
@@ -69,12 +73,14 @@ async function updateHost(params) {
         throw new Error(`Failed to update host: ${error.message}`);
     }
 }
+*/
 
 /**
  * Delete hosts from Zabbix
  * @param {Array<string>} hostIds - Array of host IDs to delete
  * @returns {Promise<Object>} Deletion result
  */
+/*
 async function deleteHosts(hostIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0 || !hostIds.every(id => typeof id === 'string')) {
         throw new Error("deleteHosts expects a non-empty array of string host IDs.");
@@ -90,13 +96,14 @@ async function deleteHosts(hostIds) {
         throw new Error(`Failed to delete hosts: ${error.message}`);
     }
 }
+*/
 
 /**
  * Get host interfaces
  * @param {Object} options - Parameters for hostinterface.get
  * @returns {Promise<Array>} Array of host interfaces
  */
-async function getHostInterfaces(options = { output: "extend" }) {
+async function getHostInterfaces(options = { output: 'extend' }) {
     try {
         logger.debug(`${config.logging.prefix} Getting host interfaces`);
         return await request('hostinterface.get', options);
@@ -113,14 +120,14 @@ async function getHostInterfaces(options = { output: "extend" }) {
  */
 async function getHostMacros(hostIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
-        throw new Error("getHostMacros expects a non-empty array of host IDs.");
+        throw new Error('getHostMacros expects a non-empty array of host IDs.');
     }
 
     try {
         logger.debug(`${config.logging.prefix} Getting macros for hosts: ${hostIds.join(', ')}`);
         return await request('usermacro.get', { 
             hostids: hostIds, 
-            output: "extend" 
+            output: 'extend' 
         });
     } catch (error) {
         logger.error(`${config.logging.prefix} Failed to get host macros:`, error.message);
@@ -134,6 +141,7 @@ async function getHostMacros(hostIds) {
  * @param {Array} macros - Array of macros to update
  * @returns {Promise<Object>} Update result
  */
+/*
 async function updateHostMacros(hostId, macros) {
     if (!hostId || !Array.isArray(macros)) {
         throw new Error("updateHostMacros expects a hostId and an array of macros.");
@@ -152,6 +160,7 @@ async function updateHostMacros(hostId, macros) {
         throw new Error(`Failed to update host macros: ${error.message}`);
     }
 }
+    */
 
 /**
  * Get hosts by name or pattern
@@ -188,7 +197,7 @@ async function getHostsByName(hostNames, additionalOptions = {}) {
  */
 async function getHostsByGroups(groupIds, additionalOptions = {}) {
     if (!Array.isArray(groupIds) || groupIds.length === 0) {
-        throw new Error("getHostsByGroups expects a non-empty array of group IDs.");
+        throw new Error('getHostsByGroups expects a non-empty array of group IDs.');
     }
 
     try {
@@ -212,6 +221,7 @@ async function getHostsByGroups(groupIds, additionalOptions = {}) {
  * @param {Array<string>} hostIds - Array of host IDs to enable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function enableHosts(hostIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
         throw new Error("enableHosts expects a non-empty array of host IDs.");
@@ -237,12 +247,14 @@ async function enableHosts(hostIds) {
         throw new Error(`Failed to enable hosts: ${error.message}`);
     }
 }
+    */
 
 /**
  * Disable hosts
  * @param {Array<string>} hostIds - Array of host IDs to disable
  * @returns {Promise<Object>} Update result
  */
+/*
 async function disableHosts(hostIds) {
     if (!Array.isArray(hostIds) || hostIds.length === 0) {
         throw new Error("disableHosts expects a non-empty array of host IDs.");
@@ -268,17 +280,17 @@ async function disableHosts(hostIds) {
         throw new Error(`Failed to disable hosts: ${error.message}`);
     }
 }
-
+*/
 module.exports = {
     getHosts,
-    createHost,
-    updateHost,
-    deleteHosts,
+    //createHost,
+    //updateHost,
+    //deleteHosts,
     getHostInterfaces,
     getHostMacros,
-    updateHostMacros,
+    //updateHostMacros,
     getHostsByName,
-    getHostsByGroups,
-    enableHosts,
-    disableHosts
+    getHostsByGroups//,
+    //enableHosts,
+    //disableHosts
 }; 

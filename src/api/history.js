@@ -1,4 +1,5 @@
-const { request } = require('./zabbix-client');
+// eslint-disable-next-line no-unused-vars
+const { getClient, request } = require('./zabbix-client');
 const { logger } = require('../utils/logger');
 
 /**
